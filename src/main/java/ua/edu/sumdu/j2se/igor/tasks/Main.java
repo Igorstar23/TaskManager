@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.Lyfar.tasks;
+package ua.edu.sumdu.j2se.igor.tasks;
 
 public class Main {
 
