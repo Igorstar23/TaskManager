@@ -9,7 +9,7 @@ import static com.netcracker.eductr.tasks.tests.model.BaseCreator.isOld;
 import static com.netcracker.eductr.tasks.tests.utils.Types.classTypes.*;
 
 public class ClassFinder {
-	private static final String BASE_PACKAGE = "ua.edu.sumdu.j2se.Lyfar.tasks";
+	private static final String BASE_PACKAGE = "ua.edu.sumdu.j2se.igor.tasks";
 
 	public static boolean checkClassExistence(Types.classTypes type) {
 		try {
