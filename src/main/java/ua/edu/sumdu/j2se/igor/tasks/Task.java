@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.util.Objects;
+
 public class Task {
        private String title;
        private boolean active;
@@ -9,6 +11,9 @@ public class Task {
        private int end;
        private int interval;
 
+       public Task(String title) {
+              this(title, 0);
+       }
        /**
         * Constructor for non-active and non-repetitive task
         * */
@@ -111,5 +116,47 @@ public class Task {
 
               if (current >= this.time) return -1;
               return this.time;
+       }
+
+       @Override
+       public boolean equals(Object obj) {
+
+              if (this == obj) return true;
+
+              if (!(obj instanceof Task)) return false;
+              Task temp = (Task)obj;
+
+              if (Objects.equals(title, temp.title)) {
+
+                     if (this.active == temp.active) {
+
+                            if (this.repeat == temp.repeat) {
+
+                                   if (this.time == temp.time) {
+
+                                          if (this.start == temp.start) {
+
+                                                 if (this.end == temp.end) {
+
+                                                        if (this.interval == temp.interval) {
+                                                               return true;
+                                                        }
+                                                 }
+                                          }
+                                   }
+                            }
+                     }
+              }
+              return false;
+       }
+
+       @Override
+       public int hashCode() {
+              return Objects.hash(title, active, repeat, time, start, end, interval);
+       }
+
+       @Override
+       public String toString() {
+              return this.title + "with t = " + this.time;
        }
 }
