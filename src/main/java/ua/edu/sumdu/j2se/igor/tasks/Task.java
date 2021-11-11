@@ -157,6 +157,6 @@ public class Task {
 
        @Override
        public String toString() {
-              return this.title + "with t = " + this.time;
+              return this.title + " with t = " + this.time;
        }
 }
