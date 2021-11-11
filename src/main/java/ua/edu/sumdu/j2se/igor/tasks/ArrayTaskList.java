@@ -29,6 +29,7 @@ public class ArrayTaskList {
               Task[] temp = new Task[this.size() * DEF_RATIO];
               for (int i = 0; i < this.size(); i++) temp[i] = this.list[i];
               temp[this.size()] = task;
+              this.list = temp;
        }
        /**
         * For delete task in array
