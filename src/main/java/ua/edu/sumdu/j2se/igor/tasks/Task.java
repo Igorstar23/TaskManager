@@ -18,6 +18,9 @@ public class Task {
         * Constructor for non-active and non-repetitive task
         * */
        public Task(String title, int time) {
+
+              if (time < 0) throw new IllegalArgumentException("param time must be >= 0!");
+
               this.title = title;
               this.time = time;
               this.active = false;
@@ -28,6 +31,11 @@ public class Task {
 	    * Constructor for non-active and repetitive task
 	    * */
        public Task(String title, int start, int end, int interval) {
+
+              if (start < 0 || end < 0) throw new IllegalArgumentException("params start and end must are >= 0!");
+
+              if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
+
               this.title = title;
               this.start = start;
               this.end = end;
@@ -47,6 +55,9 @@ public class Task {
         * if the task is repetitive then reset the repetition time interval and turn off repeat of the task
         * */
        public void setTime(int time) {
+
+              if (time < 0) throw new IllegalArgumentException("param time must be >= 0");
+
               this.time = time;
 
               if (this.isRepeated()) this.resetTimeInterval();
@@ -59,6 +70,11 @@ public class Task {
         * @param interval must be > 0
         * */
        public void setTime(int start, int end, int interval) {
+
+              if (start < 0 || end < 0) throw new IllegalArgumentException("params start and end must are >= 0!");
+
+              if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
+
               this.start = start;
               this.end = end;
               this.interval = interval;
@@ -100,6 +116,8 @@ public class Task {
         * @return next time of task or -1 if next time of task is out of the time interval or the task is non-active
         * */
        public int nextTimeAfter(int current) {
+
+              if (current < 0) throw new IllegalArgumentException("Param current must be >= 0");
 
               if (!this.active) return -1;
 
