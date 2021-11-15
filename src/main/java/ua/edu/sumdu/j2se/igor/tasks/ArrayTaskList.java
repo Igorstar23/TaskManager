@@ -11,10 +11,15 @@ public class ArrayTaskList {
 
        public ArrayTaskList(Task tsk) {
               this();
+
+              if (tsk == null) throw new IllegalArgumentException("Array tsk must be != null!");
+
               this.list[0] = tsk;
        }
 
        public void add(Task task) {
+
+              if (task == null) throw new IllegalArgumentException("param task != null!");
 
               if (this.size() == 0) {
                   this.list[0] = task;
@@ -35,6 +40,9 @@ public class ArrayTaskList {
         * For delete task in array
         * @return true if task was deleted or false if the task for delete isn't Found*/
        public boolean remove(Task task) {
+
+              if (task == null) throw new IllegalArgumentException("param task != null!");
+
               int index = -1;
               for (int i = 0; i < this.size(); i++) {
 
@@ -75,15 +83,16 @@ public class ArrayTaskList {
         * */
        public Task getTask(int index) {
 
-              if (index < 0 || index >= this.size()) {
-                  throw new ArrayIndexOutOfBoundsException("Index < 0 or index >= size of array");
-              }
+              if (index < 0 || index >= this.size()) throw new IndexOutOfBoundsException("Param Index must be >= 0 && < size array!");
               return this.list[index];
        }
        /**
         * For get Array Task from current array
         * @return Array of Tasks from the current array Where Tasks be in time interval [from, to]*/
-       public ArrayTaskList incoming(int from, int to) throws Exception {
+       public ArrayTaskList incoming(int from, int to) {
+
+              if (from < 0 || to < 0) throw new IllegalArgumentException("Params 'from' and 'to' must are >= 0");
+
               ArrayTaskList temp = new ArrayTaskList();
 
               for (int i = 0; i < this.size(); i++) {
