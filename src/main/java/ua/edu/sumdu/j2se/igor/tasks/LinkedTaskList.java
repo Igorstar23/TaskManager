@@ -1,8 +1,8 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
 public class LinkedTaskList {
-       private Node First = null;
-       private Node Last = null;
+       private Node first;
+       private Node last;
 
        private class Node {
                private Task item;
@@ -49,7 +49,7 @@ public class LinkedTaskList {
               for (int i = 0; i < tasks.length; i++) this.add(tasks[i]);
        }
        /**
-        * Fro add Task to list
+        * For add Task to list
         * @param task must be != null else IllegalArgException
         */
        void add(Task task) {
@@ -57,19 +57,19 @@ public class LinkedTaskList {
             if (task == null) throw new IllegalArgumentException("param task != null!");
 
             if (this.isEmpty()) {
-                this.First = new Node(task);
-                this.Last = First;
+                this.first = new Node(task);
+                this.last = first;
                 return;
             }
 
-            if (this.Last == this.First) {
-                this.Last = new Node(task, this.First);
-                this.First.setNextNode(this.Last);
+            if (this.last == this.first) {
+                this.last = new Node(task, this.first);
+                this.first.setNextNode(this.last);
                 return;
             }
 
-            this.Last.setNextNode(new Node(task, this.Last));
-            this.Last = this.Last.getNextNode();
+            this.last.setNextNode(new Node(task, this.last));
+            this.last = this.last.getNextNode();
        }
        /**
        * @param index must be >= 0 and  < size of list
@@ -79,11 +79,11 @@ public class LinkedTaskList {
 
               if (index < 0 || index >= this.size()) throw new IndexOutOfBoundsException("Param Index must be >= 0 && < size of list!");
 
-              if (index == 0) return this.First.getItem();
+              if (index == 0) return this.first.getItem();
 
-              if (index == this.size() - 1) return this.Last.getItem();
+              if (index == this.size() - 1) return this.last.getItem();
 
-              Node needNode = this.First;
+              Node needNode = this.first;
               for (int i = 0; i < index; i++) needNode = needNode.getNextNode();
               return needNode.getItem();
        }
@@ -97,23 +97,23 @@ public class LinkedTaskList {
 
               if (this.isEmpty()) return false;
 
-              if (this.First.item.equals(task)) {
-                  this.First = this.First.getNextNode();
+              if (this.first.item.equals(task)) {
+                  this.first = this.first.getNextNode();
 
-                  if (this.First != null) this.First.setPrevNode(null);
+                  if (this.first != null) this.first.setPrevNode(null);
                   return true;
               }
 
-              if (this.Last.item.equals(task)) {
-                  this.Last = this.Last.getPrevNode();
+              if (this.last.item.equals(task)) {
+                  this.last = this.last.getPrevNode();
 
-                  if (this.Last != null) this.Last.setNextNode(null);
+                  if (this.last != null) this.last.setNextNode(null);
                   return true;
               }
 
-              Node oldNode = this.First.getNextNode();
+              Node oldNode = this.first.getNextNode();
               boolean isFound = false;
-              for (; oldNode != this.Last; oldNode = oldNode.getNextNode()) {
+              for (; oldNode != this.last; oldNode = oldNode.getNextNode()) {
 
                    if (oldNode.item.equals(task)) {
                        isFound = true;
@@ -135,7 +135,7 @@ public class LinkedTaskList {
        }
        /**
         * For delete task from end*/
-       public boolean remove() { return !this.isEmpty() && this.remove(this.Last.item); }
+       public boolean remove() { return !this.isEmpty() && this.remove(this.last.item); }
        /**
        *@return size of list
        */
@@ -143,12 +143,12 @@ public class LinkedTaskList {
 
               if (this.isEmpty()) return 0;
               int count = 0;
-              for (Node cur = this.First; cur != this.Last; count++, cur = cur.getNextNode());
+              for (Node cur = this.first; cur != this.last; count++, cur = cur.getNextNode());
 
-              if (this.Last != null) count++;
+              if (this.last != null) count++;
               return count;
        }
-       public boolean isEmpty() { return (this.First == null && this.Last == null); }
+       public boolean isEmpty() { return (this.first == null && this.last == null); }
        /**
        * For get Array Task from current list
        * @param from must be >= 0 else IllegalArgException
