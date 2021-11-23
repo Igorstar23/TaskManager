@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
        private Node first;
        private Node last;
 
@@ -97,6 +97,14 @@ public class LinkedTaskList {
 
               if (this.isEmpty()) return false;
 
+              if (this.first == this.last) {
+
+                  if (!this.first.item.equals(task)) return false;
+                  this.first = null;
+                  this.last = null;
+                  return true;
+              }
+
               if (this.first.item.equals(task)) {
                   this.first = this.first.getNextNode();
 
@@ -143,29 +151,11 @@ public class LinkedTaskList {
 
               if (this.isEmpty()) return 0;
               int count = 0;
+
               for (Node cur = this.first; cur != this.last; count++, cur = cur.getNextNode());
 
               if (this.last != null) count++;
               return count;
        }
        public boolean isEmpty() { return (this.first == null && this.last == null); }
-       /**
-       * For get Array Task from current list
-       * @param from must be >= 0 else IllegalArgException
-       * @param to must be >= 0 else IllegalArgException
-       * @return Array of Tasks from the current list Where Tasks be in time interval [from, to]*/
-       public LinkedTaskList incoming(int from, int to) {
-
-              if (from < 0 || to < 0) throw new IllegalArgumentException("Params 'from' and 'to' must are >= 0");
-
-              LinkedTaskList temp = new LinkedTaskList();
-
-              for (int i = 0; i < this.size(); i++) {
-
-                   if (this.getTask(i).nextTimeAfter(from) != -1 && this.getTask(i).nextTimeAfter(from) <= to) {
-                       temp.add(this.getTask(i));
-                   }
-              }
-              return temp;
-       }
 }
