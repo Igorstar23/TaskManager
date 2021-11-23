@@ -44,6 +44,13 @@ public class Task {
               this.repeat =  true;
               this.time = this.nextTimeAfter(this.start);
        }
+       /**
+        * Constructor for active and repetitive task
+        * */
+       public Task(String title, int start, int end, int interval, boolean active) {
+              this(title, start,end,interval);
+              this.active = active;
+       }
 
        /**
         * @param title isn't null and empty else set value "Title is None!"

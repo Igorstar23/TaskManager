@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.igor.tasks;
 
 import java.util.ArrayList;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
        private Task[] list;
        private static final int DEF_SIZE = 5;
        private static final int DEF_RATIO = 2;
@@ -16,6 +16,12 @@ public class ArrayTaskList {
 
               this.list[0] = tsk;
        }
+       public ArrayTaskList(Task[] tasks) {
+
+              if (tasks == null) throw new IllegalArgumentException("Array tsk must be != null!");
+              this.list = tasks;
+       }
+
 
        public void add(Task task) {
 
@@ -85,22 +91,5 @@ public class ArrayTaskList {
 
               if (index < 0 || index >= this.size()) throw new IndexOutOfBoundsException("Param Index must be >= 0 && < size array!");
               return this.list[index];
-       }
-       /**
-        * For get Array Task from current array
-        * @return Array of Tasks from the current array Where Tasks be in time interval [from, to]*/
-       public ArrayTaskList incoming(int from, int to) {
-
-              if (from < 0 || to < 0) throw new IllegalArgumentException("Params 'from' and 'to' must are >= 0");
-
-              ArrayTaskList temp = new ArrayTaskList();
-
-              for (int i = 0; i < this.size(); i++) {
-
-                   if (this.list[i].nextTimeAfter(from) != -1 && this.list[i].nextTimeAfter(from) <= to) {
-                       temp.add(this.list[i]);
-                   }
-              }
-              return temp;
        }
 }
