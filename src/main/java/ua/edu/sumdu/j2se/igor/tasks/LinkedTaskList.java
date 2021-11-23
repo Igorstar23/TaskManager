@@ -52,7 +52,7 @@ public class LinkedTaskList {
         * For add Task to list
         * @param task must be != null else IllegalArgException
         */
-       void add(Task task) {
+       public void add(Task task) {
 
             if (task == null) throw new IllegalArgumentException("param task != null!");
 
