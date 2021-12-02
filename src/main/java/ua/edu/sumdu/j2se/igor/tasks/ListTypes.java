@@ -1,17 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
 public class ListTypes {
-       public enum types {
-              ARRAY(ArrayTaskList.class.getName()),
-              LINKED(LinkedTaskList.class.getName());
-
-              private final String name;
-
-              types(String s) {
-                    this.name = s;
-              }
-              public String getName() { return this.name; }
-       }
+       public enum types { ARRAY, LINKED}
 
        /**
         * @param taskObj must be not null
