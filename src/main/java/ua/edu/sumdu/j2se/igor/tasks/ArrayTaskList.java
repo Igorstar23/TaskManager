@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArrayTaskList extends AbstractTaskList {
        private Task[] list;
@@ -21,7 +21,6 @@ public class ArrayTaskList extends AbstractTaskList {
               if (tasks == null) throw new IllegalArgumentException("Array tsk must be != null!");
               this.list = tasks;
        }
-
 
        public void add(Task task) {
 
@@ -89,7 +88,56 @@ public class ArrayTaskList extends AbstractTaskList {
         * */
        public Task getTask(int index) {
 
-              if (index < 0 || index >= this.size()) throw new IndexOutOfBoundsException("Param Index must be >= 0 && < size array!");
+              if (index < 0) throw new IndexOutOfBoundsException("Param Index is < 0!");
+              if (index >= this.size()) throw new IndexOutOfBoundsException("Param Index is >= size array!");
               return this.list[index];
+       }
+
+       /**
+        * Returns an iterator over elements of type {@code T}.
+        *
+        * @return an Iterator.
+        */
+       @Override
+       public Iterator<Task> iterator() {
+
+              return new Iterator() {
+                     private int index = -1;
+                     @Override
+                     public boolean hasNext() {
+                            return (index + 1 < size());
+                     }
+
+                     @Override
+                     public Task next() {
+                            return getTask(++index);
+                     }
+
+
+                     @Override
+                     public void remove() {
+
+                            if (index < 0) throw new IllegalStateException("iterator on null element!");
+                            ArrayTaskList.this.remove(getTask(index));
+                            --index;
+                     }
+              };
+       }
+
+       /**
+        * @return a hash code value for this object.
+        * @implSpec As far as is reasonably practical, the {@code hashCode} method defined
+        * by class {@code Object} returns distinct integers for distinct objects.
+        * @see Object#equals(Object)
+        * @see System#identityHashCode
+        */
+       @Override
+       public int hashCode() { return super.hashCode(); }
+
+       @Override
+       public String toString() {
+              String res = " ";
+              for (var el : this) res += el.toString() + " ";
+              return res;
        }
 }

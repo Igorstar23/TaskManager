@@ -51,6 +51,18 @@ public class Task {
               this(title, start,end,interval);
               this.active = active;
        }
+       /**
+        * Constructor for init all fields
+        * */
+       public Task(String title, boolean active, boolean repeat, int time, int start, int end, int interval) {
+              this.title = title;
+              this.active = active;
+              this.repeat = repeat;
+              this.time = time;
+              this.start = start;
+              this.end = end;
+              this.interval = interval;
+       }
 
        /**
         * @param title isn't null and empty else set value "Title is None!"
@@ -182,6 +194,16 @@ public class Task {
 
        @Override
        public String toString() {
-              return this.title + " with t = " + this.time;
+
+              return this.title +( (this.isActive())? " is active " : " isn;'t active ") + ((this.isRepeated())? "start = " + this.start
+                      + " end = " + " interval = " + this.interval : " time = " + this.time);
        }
+
+       /**
+        * @return a clone of this instance.
+        */
+         @Override
+         protected Task clone() {
+                   return new Task(this.title, this.active, this.repeat, this.time, this.start, this.end, this.interval);
+         }
 }

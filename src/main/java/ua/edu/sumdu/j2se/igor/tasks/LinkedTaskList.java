@@ -1,5 +1,10 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.lang.reflect.Type;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Consumer;
+
 public class LinkedTaskList extends AbstractTaskList{
        private Node first;
        private Node last;
@@ -158,4 +163,50 @@ public class LinkedTaskList extends AbstractTaskList{
               return count;
        }
        public boolean isEmpty() { return (this.first == null && this.last == null); }
+
+       /**
+         * Returns an iterator over elements of type {@code T}.
+         *
+         * @return an Iterator.
+         */
+       @Override
+       public Iterator<Task> iterator() {
+              return new Iterator() {
+                     private int index = -1;
+
+                     @Override
+                     public boolean hasNext() {
+                            return (index + 1 < size());
+                     }
+
+                     @Override
+                     public Task next() {
+                            return getTask(++index);
+                     }
+
+
+                     @Override
+                     public void remove() {
+
+                            if (index < 0) throw new IllegalStateException("iterator on null element!");
+                            LinkedTaskList.this.remove(getTask(index));
+                            --index;
+                     }
+              };
+       }
+       /**
+        * @return a hash code value for this object.
+        * @implSpec As far as is reasonably practical, the {@code hashCode} method defined
+        * by class {@code Object} returns distinct integers for distinct objects.
+        * @see Object#equals(Object)
+        * @see System#identityHashCode
+       */
+       @Override
+       public int hashCode() { return super.hashCode(); }
+       @Override
+       public String toString() {
+              String res = " ";
+              for (var el : this) res += el.toString() + " ";
+              return res;
+       }
 }
