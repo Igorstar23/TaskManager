@@ -1,7 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
 public class ListTypes {
-       public enum types {ARRAY, LINKED}
+       public enum types { ARRAY, LINKED}
 
        /**
         * @param taskObj must be not null
