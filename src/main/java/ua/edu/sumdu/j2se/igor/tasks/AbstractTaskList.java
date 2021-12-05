@@ -1,8 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
        abstract public void add(Task task);
@@ -15,18 +14,11 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
         * @param from must be >= 0 else IllegalArgException
         * @param to must be >= 0 else IllegalArgException
         * @return Array of Tasks from the current list Where Tasks be in time interval [from, to]*/
-       public AbstractTaskList incoming(int from, int to) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+       public final AbstractTaskList incoming(int from, int to) {
 
               if (from < 0 || to < 0) throw new IllegalArgumentException("Params 'from' and 'to' must are >= 0");
-
               AbstractTaskList temp = TaskListFactory.createTaskList(ListTypes.getTypeList(this));
-
-              for (int i = 0; i < this.size(); i++) {
-
-                     if (this.getTask(i).nextTimeAfter(from) != -1 && this.getTask(i).nextTimeAfter(from) <= to) {
-                            temp.add(this.getTask(i));
-                     }
-              }
+              this.getStream().filter(x -> x.nextTimeAfter(from) != -1 && x.nextTimeAfter(from) <= to).forEach(temp::add);
               return temp;
        }
 
@@ -92,24 +84,24 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
         * Return copy of current object*/
        @Override
        protected AbstractTaskList clone() {
-                 ArrayTaskList temp = null;
+                 AbstractTaskList temp = null;
                  try {
-                      temp = (ArrayTaskList) TaskListFactory.createTaskList(ListTypes.getTypeList(this));
+                      temp = TaskListFactory.createTaskList(ListTypes.getTypeList(this));
                  } catch (Exception e) {
                       e.printStackTrace();
                  }
-                 for (int i = 0; i < this.size(); i++) temp.add(this.getTask(i));
+                 for (int i = 0; i < this.size(); i++) temp.add(this.getTask(i).clone());
                  return temp;
        }
-      /**
+       /**
         * @return a hash code value for this object.
         * @implSpec As far as is reasonably practical, the {@code hashCode} method defined
         * by class {@code Object} returns distinct integers for distinct objects.
          * @see Object#equals(Object)
          * @see System#identityHashCode
       */
-      @Override
-      public int hashCode() {
+       @Override
+       public int hashCode() {
              int hash = 1;
              for (var el : this) {
                   hash *= 23;
@@ -117,4 +109,7 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
              }
              return hash;
       }
+       /**
+        * For get Stream Tasks for this Collection*/
+       abstract public Stream<Task> getStream();
 }
