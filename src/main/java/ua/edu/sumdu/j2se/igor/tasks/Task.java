@@ -26,7 +26,18 @@ public class Task {
               this.active = false;
               this.repeat = false;
        }
+       /**
+        * Constructor for active and non-repetitive task
+        * */
+       public Task(String title, int time, boolean active) {
 
+              if (time < 0) throw new IllegalArgumentException("param time must be >= 0!");
+
+              this.title = title;
+              this.time = time;
+              this.active = active;
+              this.repeat = false;
+       }
 	   /**
 	    * Constructor for non-active and repetitive task
 	    * */
@@ -54,7 +65,7 @@ public class Task {
        /**
         * Constructor for init all fields
         * */
-       public Task(String title, boolean active, boolean repeat, int time, int start, int end, int interval) {
+       public Task(String title, int time, int start, int end, int interval, boolean active, boolean repeat) {
               this.title = title;
               this.active = active;
               this.repeat = repeat;
@@ -204,6 +215,6 @@ public class Task {
         */
          @Override
          protected Task clone() {
-                   return new Task(this.title, this.active, this.repeat, this.time, this.start, this.end, this.interval);
+                   return new Task(this.title, this.time, this.start, this.end, this.interval, this.active, this.repeat);
          }
 }

@@ -1,9 +1,8 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
-import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList{
        private Node first;
@@ -208,5 +207,11 @@ public class LinkedTaskList extends AbstractTaskList{
               String res = " ";
               for (var el : this) res += el.toString() + " ";
               return res;
+       }
+       @Override
+       public Stream<Task> getStream() {
+              Task[] tasks = new Task[this.size()];
+              for (int i = 0; i < this.size(); i++) tasks[i] = this.getTask(i);
+              return Arrays.stream(tasks);
        }
 }

@@ -1,6 +1,9 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList {
        private Task[] list;
@@ -8,7 +11,6 @@ public class ArrayTaskList extends AbstractTaskList {
        private static final int DEF_RATIO = 2;
 
        public ArrayTaskList() { this.list = new Task[DEF_SIZE]; }
-
        public ArrayTaskList(Task tsk) {
               this();
 
@@ -123,7 +125,6 @@ public class ArrayTaskList extends AbstractTaskList {
                      }
               };
        }
-
        /**
         * @return a hash code value for this object.
         * @implSpec As far as is reasonably practical, the {@code hashCode} method defined
@@ -133,11 +134,15 @@ public class ArrayTaskList extends AbstractTaskList {
         */
        @Override
        public int hashCode() { return super.hashCode(); }
-
        @Override
        public String toString() {
               String res = " ";
               for (var el : this) res += el.toString() + " ";
               return res;
+       }
+
+       @Override
+       public Stream<Task> getStream() {
+              return Arrays.stream(this.list).filter(Objects::nonNull);
        }
 }
