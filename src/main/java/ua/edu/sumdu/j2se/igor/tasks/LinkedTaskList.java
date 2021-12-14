@@ -214,4 +214,8 @@ public class LinkedTaskList extends AbstractTaskList{
               for (int i = 0; i < this.size(); i++) tasks[i] = this.getTask(i);
               return Arrays.stream(tasks);
        }
+       @Override
+       public LinkedTaskList clone() {
+              return (LinkedTaskList) super.clone();
+       }
 }
