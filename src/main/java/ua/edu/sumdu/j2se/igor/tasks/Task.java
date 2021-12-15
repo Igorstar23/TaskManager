@@ -1,25 +1,27 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.Objects;
 
 public class Task {
        private String title;
        private boolean active;
        private boolean repeat;
-       private int time;
-       private int start;
-       private int end;
-       private int interval;
+       private LocalDateTime time;
+       private LocalDateTime start;
+       private LocalDateTime end;
+       private int interval; // seconds
 
        public Task(String title) {
-              this(title, 0);
+              this(title, LocalDateTime.now());
        }
        /**
         * Constructor for non-active and non-repetitive task
         * */
-       public Task(String title, int time) {
+       public Task(String title, LocalDateTime time) {
 
-              if (time < 0) throw new IllegalArgumentException("param time must be >= 0!");
+              if (time == null) throw new IllegalArgumentException("param time is null!");
 
               this.title = title;
               this.time = time;
@@ -29,9 +31,9 @@ public class Task {
        /**
         * Constructor for active and non-repetitive task
         * */
-       public Task(String title, int time, boolean active) {
+       public Task(String title, LocalDateTime time, boolean active) {
 
-              if (time < 0) throw new IllegalArgumentException("param time must be >= 0!");
+              if (time == null) throw new IllegalArgumentException("param time is null!");
 
               this.title = title;
               this.time = time;
@@ -41,9 +43,9 @@ public class Task {
 	   /**
 	    * Constructor for non-active and repetitive task
 	    * */
-       public Task(String title, int start, int end, int interval) {
+       public Task(String title, LocalDateTime start, LocalDateTime end, int interval) {
 
-              if (start < 0 || end < 0) throw new IllegalArgumentException("params start and end must are >= 0!");
+              if (start == null|| end == null) throw new IllegalArgumentException("param start or end must is null!");
 
               if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
 
@@ -58,14 +60,14 @@ public class Task {
        /**
         * Constructor for active and repetitive task
         * */
-       public Task(String title, int start, int end, int interval, boolean active) {
+       public Task(String title, LocalDateTime start, LocalDateTime end, int interval, boolean active) {
               this(title, start,end,interval);
               this.active = active;
        }
        /**
         * Constructor for init all fields
         * */
-       public Task(String title, int time, int start, int end, int interval, boolean active, boolean repeat) {
+       public Task(String title, LocalDateTime time, LocalDateTime start, LocalDateTime end, int interval, boolean active, boolean repeat) {
               this.title = title;
               this.active = active;
               this.repeat = repeat;
@@ -84,9 +86,9 @@ public class Task {
         * Set time for non-repetitive task
         * if the task is repetitive then reset the repetition time interval and turn off repeat of the task
         * */
-       public void setTime(int time) {
+       public void setTime(LocalDateTime time) {
 
-              if (time < 0) throw new IllegalArgumentException("param time must be >= 0");
+              if (time == null) throw new IllegalArgumentException("param time is null!");
 
               this.time = time;
 
@@ -99,9 +101,9 @@ public class Task {
         * @param end must be > start and >= 0
         * @param interval must be > 0
         * */
-       public void setTime(int start, int end, int interval) {
+       public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
 
-              if (start < 0 || end < 0) throw new IllegalArgumentException("params start and end must are >= 0!");
+              if (start == null|| end == null) throw new IllegalArgumentException("param start or end must is null!");
 
               if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
 
@@ -119,15 +121,15 @@ public class Task {
         * Get time for non-repetitive task
         * @return the time of task or time start of the repetition time interval for repetitive task
         * */
-       public int getTime() { return (this.isRepeated())? this.start : this.time; }
+       public LocalDateTime getTime() { return (this.isRepeated())? this.start : this.time; }
        /**
         * @return the time start of the repetition time interval or the time of task for non-repetitive task
         * */
-       public int getStartTime() { return (this.isRepeated())? this.start : this.time; }
+       public LocalDateTime getStartTime() { return (this.isRepeated())? this.start : this.time; }
        /**
         * @return the time end of the repetition time interval or the time of task for non-repetitive task
         * */
-       public int getEndTime() { return (this.isRepeated())? this.end : this.time; }
+       public LocalDateTime getEndTime() { return (this.isRepeated())? this.end : this.time; }
        /**
         * @return value of interval or 0 for non-repetitive task
         * */
@@ -137,32 +139,32 @@ public class Task {
         * For reset the repetition time interval and turn off repeat of the task
         * */
        public void resetTimeInterval() {
-              this.start = 0;
-              this.end = 0;
+              this.start = null;
+              this.end = null;
               this.interval = 0;
               this.repeat = false;
        }
        /**
         * @return next time of task or -1 if next time of task is out of the time interval or the task is non-active
         * */
-       public int nextTimeAfter(int current) {
+       public LocalDateTime nextTimeAfter(LocalDateTime current) {
 
-              if (current < 0) throw new IllegalArgumentException("Param current must be >= 0");
+              if (current == null) throw new IllegalArgumentException("Param current is null!");
 
-              if (!this.active) return -1;
+              if (!this.active) return null;
 
               if (this.isRepeated()) {
 
-                  if (current >= this.end) return -1;
+                  if (current.compareTo(this.end) >= 0) return null;
 
-                  int next = this.start;
-                  for (; next <= current; next += this.interval);
+                  LocalDateTime next = this.start;
+                  for (; next.compareTo(current) <= 0; next = next.plusSeconds(this.interval));
 
-                  if (next <= this.end) return next;
-                  return -1;
+                  if (next.compareTo(this.end) <= 0) return next;
+                  return null;
               }
 
-              if (current >= this.time) return -1;
+              if (current.compareTo(this.time) >= 0) return null;
               return this.time;
        }
 
@@ -180,11 +182,11 @@ public class Task {
 
                             if (this.repeat == temp.repeat) {
 
-                                   if (this.time == temp.time) {
+                                   if (Objects.equals(this.time, temp.time)) {
 
-                                          if (this.start == temp.start) {
+                                          if (Objects.equals(this.start, temp.start)) {
 
-                                                 if (this.end == temp.end) {
+                                                 if (Objects.equals(this.end, temp.end)) {
 
                                                         if (this.interval == temp.interval) {
                                                                return true;
@@ -206,7 +208,7 @@ public class Task {
        @Override
        public String toString() {
 
-              return this.title +( (this.isActive())? " is active " : " isn;'t active ") + ((this.isRepeated())? "start = " + this.start
+              return this.title +( (this.isActive())? " is active " : " isn't active ") + ((this.isRepeated())? "start = " + this.start
                       + " end = " + " interval = " + this.interval : " time = " + this.time);
        }
 
@@ -214,7 +216,7 @@ public class Task {
         * @return a clone of this instance.
         */
          @Override
-         protected Task clone() {
+         public Task clone() {
                    return new Task(this.title, this.time, this.start, this.end, this.interval, this.active, this.repeat);
          }
 }

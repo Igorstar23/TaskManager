@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
@@ -14,11 +15,11 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
         * @param from must be >= 0 else IllegalArgException
         * @param to must be >= 0 else IllegalArgException
         * @return Array of Tasks from the current list Where Tasks be in time interval [from, to]*/
-       public final AbstractTaskList incoming(int from, int to) {
+       public final AbstractTaskList incoming(LocalDateTime from, LocalDateTime to) {
 
-              if (from < 0 || to < 0) throw new IllegalArgumentException("Params 'from' and 'to' must are >= 0");
+              if (from == null || to == null) throw new IllegalArgumentException("Param 'from' or 'to' is null!");
               AbstractTaskList temp = TaskListFactory.createTaskList(ListTypes.getTypeList(this));
-              this.getStream().filter(x -> x.nextTimeAfter(from) != -1 && x.nextTimeAfter(from) <= to).forEach(temp::add);
+              this.getStream().filter(x -> x.nextTimeAfter(from) != null && x.nextTimeAfter(from).compareTo(to) <= 0).forEach(temp::add);
               return temp;
        }
 

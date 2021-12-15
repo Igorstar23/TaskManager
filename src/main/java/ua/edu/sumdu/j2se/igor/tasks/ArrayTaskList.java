@@ -145,4 +145,9 @@ public class ArrayTaskList extends AbstractTaskList {
        public Stream<Task> getStream() {
               return Arrays.stream(this.list).filter(Objects::nonNull);
        }
+
+       @Override
+       public ArrayTaskList clone() {
+              return (ArrayTaskList) super.clone();
+       }
 }

@@ -7,7 +7,7 @@ public class ListTypes {
         * @param taskObj must be not null
         * @throws IllegalArgumentException if taskObj is null
         * @return  type of taskObj*/
-       public static ListTypes.types getTypeList(AbstractTaskList taskObj) {
+       public static ListTypes.types getTypeList(Iterable<Task> taskObj) {
 
               if (taskObj == null) throw new IllegalArgumentException("Param taskObj is null!");
 
