@@ -1,10 +1,10 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Serializable {
        private String title;
        private boolean active;
        private boolean repeat;
@@ -42,6 +42,7 @@ public class Task {
        }
 	   /**
 	    * Constructor for non-active and repetitive task
+        * @param interval is seconds
 	    * */
        public Task(String title, LocalDateTime start, LocalDateTime end, int interval) {
 
@@ -59,6 +60,7 @@ public class Task {
        }
        /**
         * Constructor for active and repetitive task
+        * @param interval is seconds
         * */
        public Task(String title, LocalDateTime start, LocalDateTime end, int interval, boolean active) {
               this(title, start,end,interval);
@@ -66,6 +68,7 @@ public class Task {
        }
        /**
         * Constructor for init all fields
+        * @param interval is seconds
         * */
        public Task(String title, LocalDateTime time, LocalDateTime start, LocalDateTime end, int interval, boolean active, boolean repeat) {
               this.title = title;
@@ -199,24 +202,22 @@ public class Task {
               }
               return false;
        }
-
        @Override
        public int hashCode() {
               return Objects.hash(title, active, repeat, time, start, end, interval);
        }
-
        @Override
        public String toString() {
 
               return this.title +( (this.isActive())? " is active " : " isn't active ") + ((this.isRepeated())? "start = " + this.start
-                      + " end = " + " interval = " + this.interval : " time = " + this.time);
+                      + " end = " + this.end + " interval = " + this.interval : " time = " + this.time);
+       }
+       /**
+         * @return a clone of this instance.
+       * */
+       @Override
+       public Task clone() {
+              return new Task(this.title, this.time, this.start, this.end, this.interval, this.active, this.repeat);
        }
 
-       /**
-        * @return a clone of this instance.
-        */
-         @Override
-         public Task clone() {
-                   return new Task(this.title, this.time, this.start, this.end, this.interval, this.active, this.repeat);
-         }
 }

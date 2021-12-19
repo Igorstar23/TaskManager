@@ -1,14 +1,18 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
-public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
-       abstract public void add(Task task);
+public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Serializable {
        abstract public Task getTask(int index);
        abstract public boolean remove(Task task);
        abstract public int size();
+       abstract public void add(Task task);
+       public void addAll(Task[] tasks) { Arrays.stream(tasks).forEach(this::add); }
+       public void addAllFromList(AbstractTaskList tasks) { tasks.getStream().forEach(this::add); }
 
        /**
         * For get Array Task from current list
@@ -98,9 +102,9 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable {
         * @return a hash code value for this object.
         * @implSpec As far as is reasonably practical, the {@code hashCode} method defined
         * by class {@code Object} returns distinct integers for distinct objects.
-         * @see Object#equals(Object)
-         * @see System#identityHashCode
-      */
+        * @see Object#equals(Object)
+        * @see System#identityHashCode
+       */
        @Override
        public int hashCode() {
              int hash = 1;
