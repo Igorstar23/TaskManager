@@ -14,9 +14,13 @@ public class LinkedTaskList extends AbstractTaskList{
                private Node prevNode; // prev move to First
 
                public Node() {}
+               /**
+                 * @param task must be not null
+                 * @throws IllegalArgumentException if param task is null
+               * */
                public Node(Task task) {
 
-                      if (task == null) throw new IllegalArgumentException("param task != null!");
+                      if (task == null) throw new IllegalArgumentException("param task is null!");
                       this.item = task;
                }
                public Node(Task task, Node prevNode) {
@@ -37,28 +41,31 @@ public class LinkedTaskList extends AbstractTaskList{
 
        public LinkedTaskList() {}
        /**
-        * @param task must be != null else IllegalArgException
+        * @param task must be != null
+        * @throws IllegalArgumentException if param task is null
        */
        public LinkedTaskList(Task task) {
 
-              if (task == null) throw new IllegalArgumentException("Param task != null!");
+              if (task == null) throw new IllegalArgumentException("Param task is null!");
               this.add(task);
        }
        /**
-       * @param tasks must be != null else IllegalArgException
-       */
+         * @param tasks must be != null
+         * @throws IllegalArgumentException if param tasks is null
+       * */
        public LinkedTaskList(Task[] tasks) {
 
-              if (tasks == null) throw new IllegalArgumentException("Param array tasks != null!");
+              if (tasks == null) throw new IllegalArgumentException("Param array tasks is null!");
               for (int i = 0; i < tasks.length; i++) this.add(tasks[i]);
        }
        /**
-        * For add Task to list
-        * @param task must be != null else IllegalArgException
-        */
+         * For add Task to list
+         * @param task must be != null
+         * @throws IllegalArgumentException if param task is null
+       * */
        public void add(Task task) {
 
-            if (task == null) throw new IllegalArgumentException("param task != null!");
+            if (task == null) throw new IllegalArgumentException("param task is null!");
 
             if (this.isEmpty()) {
                 this.first = new Node(task);
@@ -76,12 +83,15 @@ public class LinkedTaskList extends AbstractTaskList{
             this.last = this.last.getNextNode();
        }
        /**
-       * @param index must be >= 0 and  < size of list
-       * @return IndexException if index out of size list else Task with need index
+       * @param index must be >= 0 and < size of list
+       * @return Task with need index from this list
+       * @throws IndexOutOfBoundsException if index < 0 or >= size of this list
        * */
        public Task getTask(int index) {
 
-              if (index < 0 || index >= this.size()) throw new IndexOutOfBoundsException("Param Index must be >= 0 && < size of list!");
+              if (index < 0) throw new IndexOutOfBoundsException("Param Index < 0!");
+
+              if (index >= this.size()) throw new IndexOutOfBoundsException("Param index >= size of this List!");
 
               if (index == 0) return this.first.getItem();
 
@@ -92,12 +102,14 @@ public class LinkedTaskList extends AbstractTaskList{
               return needNode.getItem();
        }
        /**
-       * For delete task from list
-       * @param task must be != null else IllegalArgException
-       * @return true if task was deleted or false if the task for delete isn't Found*/
+         * For delete task from list
+         * @param task must be != null
+         * @throws IllegalArgumentException if param task is null
+         * @return true if task was deleted or false if the task for delete isn't Found
+       * */
        public boolean remove(Task task) {
 
-              if (task == null) throw new IllegalArgumentException("param task != null!");
+              if (task == null) throw new IllegalArgumentException("param task is null!");
 
               if (this.isEmpty()) return false;
 
@@ -165,7 +177,7 @@ public class LinkedTaskList extends AbstractTaskList{
 
        /**
          * Returns an iterator over elements of type {@code T}.
-         *
+         * @throws IllegalStateException if iterator be on null element
          * @return an Iterator.
          */
        @Override
@@ -187,7 +199,7 @@ public class LinkedTaskList extends AbstractTaskList{
                      @Override
                      public void remove() {
 
-                            if (index < 0) throw new IllegalStateException("iterator on null element!");
+                            if (index < 0) throw new IllegalStateException("iterator be on null element!");
                             LinkedTaskList.this.remove(getTask(index));
                             --index;
                      }

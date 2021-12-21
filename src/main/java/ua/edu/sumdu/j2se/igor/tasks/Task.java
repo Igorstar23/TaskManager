@@ -18,6 +18,8 @@ public class Task implements Serializable {
        }
        /**
         * Constructor for non-active and non-repetitive task
+        * @param time must be not null
+        * @throws IllegalArgumentException if param time is null
         * */
        public Task(String title, LocalDateTime time) {
 
@@ -30,6 +32,8 @@ public class Task implements Serializable {
        }
        /**
         * Constructor for active and non-repetitive task
+        * @param time must be not null
+        * @throws IllegalArgumentException if param time is null!
         * */
        public Task(String title, LocalDateTime time, boolean active) {
 
@@ -42,13 +46,18 @@ public class Task implements Serializable {
        }
 	   /**
 	    * Constructor for non-active and repetitive task
-        * @param interval is seconds
+        * @param interval is seconds and it must be > 0
+        * @param start must be not null
+        * @param end must be not null
+        * @throws IllegalArgumentException if param start or end is null or interval <= 0
 	    * */
        public Task(String title, LocalDateTime start, LocalDateTime end, int interval) {
 
-              if (start == null|| end == null) throw new IllegalArgumentException("param start or end must is null!");
+              if (start == null) throw new IllegalArgumentException("param start is null!");
 
-              if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
+              if (end == null) throw new IllegalArgumentException("param end is null!");
+
+              if (interval <= 0) throw new IllegalArgumentException("param interval <= 0!");
 
               this.title = title;
               this.start = start;
@@ -88,6 +97,8 @@ public class Task implements Serializable {
        /**
         * Set time for non-repetitive task
         * if the task is repetitive then reset the repetition time interval and turn off repeat of the task
+        * @param time must be not null
+        * @throws IllegalArgumentException if param time is null
         * */
        public void setTime(LocalDateTime time) {
 
@@ -103,12 +114,15 @@ public class Task implements Serializable {
         * @param start must be < end and >= 0
         * @param end must be > start and >= 0
         * @param interval must be > 0
+        * @throws IllegalArgumentException if param start or end is null or interval <= 0
         * */
        public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
 
-              if (start == null|| end == null) throw new IllegalArgumentException("param start or end must is null!");
+              if (start == null) throw new IllegalArgumentException("param start is null!");
 
-              if (interval <= 0) throw new IllegalArgumentException("param interval must be > 0!");
+              if (end == null) throw new IllegalArgumentException("param end is null");
+
+              if (interval <= 0) throw new IllegalArgumentException("param interval <= 0!");
 
               this.start = start;
               this.end = end;
@@ -149,6 +163,8 @@ public class Task implements Serializable {
        }
        /**
         * @return next time of task or -1 if next time of task is out of the time interval or the task is non-active
+        * @param current must be not null
+        * @throws IllegalArgumentException if param current is null
         * */
        public LocalDateTime nextTimeAfter(LocalDateTime current) {
 
