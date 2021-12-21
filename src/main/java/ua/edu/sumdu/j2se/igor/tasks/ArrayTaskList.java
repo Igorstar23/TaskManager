@@ -11,22 +11,34 @@ public class ArrayTaskList extends AbstractTaskList {
        private static final int DEF_RATIO = 2;
 
        public ArrayTaskList() { this.list = new Task[DEF_SIZE]; }
+       /**
+         * @param tsk must be not null
+         * @throws IllegalArgumentException if param tsk is null
+       * */
        public ArrayTaskList(Task tsk) {
               this();
 
-              if (tsk == null) throw new IllegalArgumentException("Array tsk must be != null!");
+              if (tsk == null) throw new IllegalArgumentException("Array tsk is null!");
 
               this.list[0] = tsk;
        }
+       /**
+        * @param tasks must be not null
+        * @throws IllegalArgumentException if param tasks is null
+       * */
        public ArrayTaskList(Task[] tasks) {
 
-              if (tasks == null) throw new IllegalArgumentException("Array tsk must be != null!");
+              if (tasks == null) throw new IllegalArgumentException("Array tasks is null!");
               this.list = tasks;
        }
 
+       /**
+         * @param task must be not null
+         * @throws IllegalArgumentException if param task is null
+       * */
        public void add(Task task) {
 
-              if (task == null) throw new IllegalArgumentException("param task != null!");
+              if (task == null) throw new IllegalArgumentException("param task is null!");
 
               if (this.size() == 0) {
                   this.list[0] = task;
@@ -45,10 +57,13 @@ public class ArrayTaskList extends AbstractTaskList {
        }
        /**
         * For delete task in array
-        * @return true if task was deleted or false if the task for delete isn't Found*/
+        * @return true if task was deleted or false if the task for delete isn't Found
+        * @param task must be not null
+        * @throws IllegalArgumentException if param task is null
+        * */
        public boolean remove(Task task) {
 
-              if (task == null) throw new IllegalArgumentException("param task != null!");
+              if (task == null) throw new IllegalArgumentException("param task is null!");
 
               int index = -1;
               for (int i = 0; i < this.size(); i++) {
@@ -87,17 +102,18 @@ public class ArrayTaskList extends AbstractTaskList {
        /**
         * @param index must be >= 0 and  < size of array
         * @return IndexException if index out of size array else Task with need index
+        * @throws IndexOutOfBoundsException if param index < 0 or >= size of this array
         * */
        public Task getTask(int index) {
 
               if (index < 0) throw new IndexOutOfBoundsException("Param Index is < 0!");
-              if (index >= this.size()) throw new IndexOutOfBoundsException("Param Index is >= size array!");
+              if (index >= this.size()) throw new IndexOutOfBoundsException("Param Index is >= size of this array!");
               return this.list[index];
        }
 
        /**
         * Returns an iterator over elements of type {@code T}.
-        *
+        * @throws IllegalStateException if param iterator be on null elements
         * @return an Iterator.
         */
        @Override
@@ -119,7 +135,7 @@ public class ArrayTaskList extends AbstractTaskList {
                      @Override
                      public void remove() {
 
-                            if (index < 0) throw new IllegalStateException("iterator on null element!");
+                            if (index < 0) throw new IllegalStateException("iterator be on null element!");
                             ArrayTaskList.this.remove(getTask(index));
                             --index;
                      }

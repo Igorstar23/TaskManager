@@ -16,12 +16,15 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Ser
 
        /**
         * For get Array Task from current list
-        * @param from must be >= 0 else IllegalArgException
-        * @param to must be >= 0 else IllegalArgException
+        * @param from must be >= 0
+        * @param to must be >= 0
+        * @throws IllegalArgumentException if param 'from' or 'to' is null
         * @return Array of Tasks from the current list Where Tasks be in time interval [from, to]*/
        public final AbstractTaskList incoming(LocalDateTime from, LocalDateTime to) {
 
-              if (from == null || to == null) throw new IllegalArgumentException("Param 'from' or 'to' is null!");
+              if (from == null) throw new IllegalArgumentException("Param 'from' is null!");
+
+              if (to == null) throw new IllegalArgumentException("Param 'to' is null!");
               AbstractTaskList temp = TaskListFactory.createTaskList(ListTypes.getTypeList(this));
               this.getStream().filter(x -> x.nextTimeAfter(from) != null && x.nextTimeAfter(from).compareTo(to) <= 0).forEach(temp::add);
               return temp;
