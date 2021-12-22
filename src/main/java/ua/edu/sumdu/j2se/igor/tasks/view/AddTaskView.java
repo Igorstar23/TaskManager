@@ -12,7 +12,7 @@ public class AddTaskView implements View {
        @Override
        public int printInfo(AbstractTaskList list) {
               list.add(this.getTaskFromConsole());
-              System.out.println("New task was added!");
+              System.out.println("\nNew task was added!");
               System.out.println(list.getLastTask());
               return Controller.Actions.MENU.getInt();
        }
@@ -20,7 +20,7 @@ public class AddTaskView implements View {
        public Task getTaskFromConsole() {
               Task temp = new Task("Def");
 
-              System.out.println("Enter new Task : \n");
+              System.out.println("\nEnter new Task : \n");
               System.out.print("Enter title fo Task : ");
               temp.setTitle(Inputer.readLine());
               System.out.print("Enter active of Task (y/n): ");

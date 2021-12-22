@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -15,9 +16,9 @@ public class Inputer {
        public static final String ERROR_READ_STR = "NONE_STR";
        public static final int ERROR_READ_INT = -1;
        public enum DateFormat {
-              DEF { public String toString() { return "d-MM-yyyyThh:mm"; } },
-              DEF_POINTS { public String toString() { return "d-MM-yyyyThh:mm"; } };
-       }      public String name() { return this.toString(); }
+              DEF { public String toString() { return "d-MM-yyyy|HH:mm"; } },
+              DEF_POINTS { public String toString() { return "d.MM.yyyy|HH:mm"; } };
+       }
 
        /**
         * @return int from read l;ine or ERROR_READ_INT if it has problem with read line from System.in
@@ -78,12 +79,15 @@ public class Inputer {
 
               return false;
        }
-       //TODO: problem with parse date from string
+       /**
+        * @param date must be not null
+        * @throws IllegalArgumentException if param date is null
+        * */
        public static LocalDateTime readDateFromString(String date) {
 
               if (date == null) throw new IllegalArgumentException("Param date is null!");
 
-              DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateFormat.DEF_POINTS.name());
+              DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateFormat.DEF_POINTS.toString()).withZone(ZoneId.systemDefault());
               return ZonedDateTime.parse(date, formatter).toLocalDateTime();
        }
 
