@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.igor.tasks;
+package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,9 +10,13 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Ser
        abstract public Task getTask(int index);
        abstract public boolean remove(Task task);
        abstract public int size();
+       abstract public Task getFirstTask();
+       abstract public Task getLastTask();
+
        abstract public void add(Task task);
        public void addAll(Task[] tasks) { Arrays.stream(tasks).forEach(this::add); }
        public void addAllFromList(AbstractTaskList tasks) { tasks.getStream().forEach(this::add); }
+
 
        /**
         * For get Array Task from current list

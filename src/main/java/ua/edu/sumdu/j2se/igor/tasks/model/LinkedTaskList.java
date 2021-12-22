@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.igor.tasks;
+package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -63,6 +63,7 @@ public class LinkedTaskList extends AbstractTaskList{
          * @param task must be != null
          * @throws IllegalArgumentException if param task is null
        * */
+       @Override
        public void add(Task task) {
 
             if (task == null) throw new IllegalArgumentException("param task is null!");
@@ -87,6 +88,7 @@ public class LinkedTaskList extends AbstractTaskList{
        * @return Task with need index from this list
        * @throws IndexOutOfBoundsException if index < 0 or >= size of this list
        * */
+       @Override
        public Task getTask(int index) {
 
               if (index < 0) throw new IndexOutOfBoundsException("Param Index < 0!");
@@ -101,12 +103,18 @@ public class LinkedTaskList extends AbstractTaskList{
               for (int i = 0; i < index; i++) needNode = needNode.getNextNode();
               return needNode.getItem();
        }
+       @Override
+       public Task getLastTask() { return this.last.item; }
+       @Override
+       public Task getFirstTask() { return this.first.item; }
+
        /**
          * For delete task from list
          * @param task must be != null
          * @throws IllegalArgumentException if param task is null
          * @return true if task was deleted or false if the task for delete isn't Found
        * */
+       @Override
        public boolean remove(Task task) {
 
               if (task == null) throw new IllegalArgumentException("param task is null!");

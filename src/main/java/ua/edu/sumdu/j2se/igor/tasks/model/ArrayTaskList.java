@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.igor.tasks;
+package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -36,6 +36,7 @@ public class ArrayTaskList extends AbstractTaskList {
          * @param task must be not null
          * @throws IllegalArgumentException if param task is null
        * */
+       @Override
        public void add(Task task) {
 
               if (task == null) throw new IllegalArgumentException("param task is null!");
@@ -61,6 +62,7 @@ public class ArrayTaskList extends AbstractTaskList {
         * @param task must be not null
         * @throws IllegalArgumentException if param task is null
         * */
+       @Override
        public boolean remove(Task task) {
 
               if (task == null) throw new IllegalArgumentException("param task is null!");
@@ -91,6 +93,7 @@ public class ArrayTaskList extends AbstractTaskList {
        /**
        *@return size of array
        */
+       @Override
        public int size() {
               int count = 0;
               for (int i = 0; i < this.list.length; i++) {
@@ -104,12 +107,17 @@ public class ArrayTaskList extends AbstractTaskList {
         * @return IndexException if index out of size array else Task with need index
         * @throws IndexOutOfBoundsException if param index < 0 or >= size of this array
         * */
+       @Override
        public Task getTask(int index) {
 
               if (index < 0) throw new IndexOutOfBoundsException("Param Index is < 0!");
               if (index >= this.size()) throw new IndexOutOfBoundsException("Param Index is >= size of this array!");
               return this.list[index];
        }
+       @Override
+       public Task getFirstTask() { return this.getTask(0); }
+       @Override
+       public Task getLastTask() { return this.getTask(this.size() - 1); }
 
        /**
         * Returns an iterator over elements of type {@code T}.

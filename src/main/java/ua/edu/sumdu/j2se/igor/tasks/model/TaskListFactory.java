@@ -1,4 +1,9 @@
-package ua.edu.sumdu.j2se.igor.tasks;
+package ua.edu.sumdu.j2se.igor.tasks.model;
+
+import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.igor.tasks.model.ArrayTaskList;
+import ua.edu.sumdu.j2se.igor.tasks.model.LinkedTaskList;
+import ua.edu.sumdu.j2se.igor.tasks.model.ListTypes;
 
 public class TaskListFactory {
        /**
