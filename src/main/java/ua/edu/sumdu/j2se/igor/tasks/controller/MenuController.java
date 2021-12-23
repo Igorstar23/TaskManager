@@ -24,7 +24,6 @@ public class MenuController extends Controller{
               this.controllers.add(new SaveController(new SaveView(), Actions.SAVE));
               this.controllers.add(new LoadController(new LoadView(), Actions.LOAD));
               this.controllers.add(new ExitController(new SaveView(), Actions.END_ACT));
-              //TODO: controllers.add(new NEWTypeCont, Actions.NEED_ACT); Это будет наблюдателем, а остальные подписчики:)
        }
 
        @Override

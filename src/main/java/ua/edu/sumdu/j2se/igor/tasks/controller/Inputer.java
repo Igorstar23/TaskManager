@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks.controller;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -101,6 +103,7 @@ public class Inputer {
        public static LocalDateTime readDateFromString(String date) {
 
               if (date == null) throw new IllegalArgumentException("Param date is null!");
+              Logger.getLogger(Inputer.class).debug("String date is null");
               return ZonedDateTime.parse(date, DateFormat.DEF_POINTS.getFormat()).toLocalDateTime();
        }
 
@@ -123,8 +126,8 @@ public class Inputer {
                            temp = readDateFromString(date);
 
                      } catch (DateTimeParseException e) {
-                           System.out.print("Wrong format date!\nEnter date again" + "(" + DateFormat.DEF_POINTS + "): "
-                           );
+                           System.out.print("Wrong format date!\nEnter date again" + "(" + DateFormat.DEF_POINTS + "): ");
+                           Logger.getLogger(Inputer.class).debug("didn't read date from string " + date + " :" + e);
                            date = ERROR_READ_STR;
                      }
               }
