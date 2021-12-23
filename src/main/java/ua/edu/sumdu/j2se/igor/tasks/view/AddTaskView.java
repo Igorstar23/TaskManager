@@ -26,15 +26,14 @@ public class AddTaskView implements View {
               System.out.print("Enter active of Task (y/n): ");
               temp.setActive(Inputer.readBoolFromLine());
               System.out.print("Enter repeat of Task (y/n): ");
-              temp.setActive(Inputer.readBoolFromLine());
 
-              if (temp.isRepeated()) {
+              if (Inputer.readBoolFromLine()) {
                   System.out.print("Enter start time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
                   LocalDateTime start = Inputer.readDateFromLine();
                   System.out.print("Enter end time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
                   LocalDateTime end = Inputer.readDateFromLine();
-                  System.out.print("Enter interval of Task(seconds): ");
-                  int interval = Inputer.readInt();
+                  System.out.print("Enter interval of Task(minute): ");
+                  int interval = Inputer.readInt() * 60;
                   temp.setTime(start, end, interval);
 
               } else {

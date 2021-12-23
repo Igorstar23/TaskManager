@@ -9,7 +9,7 @@ public class AddTaskController extends Controller {
               super(view);
               this.typeAction = Actions.ADD_NEW_TASK;
        }
-       //TODO:deprecated down
+
        public AddTaskController(View view, Actions act) {
               super(view, act);
        }
@@ -32,10 +32,5 @@ public class AddTaskController extends Controller {
        @Override
        public int getIntAction() {
               return super.getIntAction();
-       }
-
-       @Override
-       public AbstractTaskList getTaskList() {
-              return null;
        }
 }

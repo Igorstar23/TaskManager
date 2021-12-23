@@ -4,9 +4,6 @@ import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 
-import java.io.IOException;
-
-
 public class MenuView implements View{
 
        @Override
@@ -16,8 +13,9 @@ public class MenuView implements View{
               System.out.println("Enter 2 for edit task");
               System.out.println("Enter 3 for delete task from your task list");
               System.out.println("Enter 4 for show all tasks");
-              System.out.println("Enter 5 for show calendar");
-              System.out.println("Enter -1 for exit");
+              System.out.println("Enter 5 for show all tasks in calendar");
+              System.out.println("Enter 6 for show calendar for need time");
+              System.out.println("Enter other number not in variants and without 0 for exit");
               int choice = Controller.Actions.MENU.getInt();
 
               choice = Inputer.readInt();

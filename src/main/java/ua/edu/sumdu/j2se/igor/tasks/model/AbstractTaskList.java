@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Serializable {
@@ -12,10 +13,47 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Ser
        abstract public int size();
        abstract public Task getFirstTask();
        abstract public Task getLastTask();
+       /**
+         * @return Task with min date from list
+       * */
+       //abstract public Task getMinTask();
+       /**
+         * @return Task with max date from list
+       * */
+       //abstract public Task getMaxTask();
 
        abstract public void add(Task task);
        public void addAll(Task[] tasks) { Arrays.stream(tasks).forEach(this::add); }
        public void addAllFromList(AbstractTaskList tasks) { tasks.getStream().forEach(this::add); }
+
+       /**
+        * @return Task with min date from list
+        * */
+       public Task getMinTask() {
+              Task min = this.getFirstTask();
+              for (Iterator<Task> i = this.iterator(); i.hasNext(); ) {
+                   Task next = i.next();
+                   LocalDateTime t1 = (min.isRepeated())? min.getStartTime() : min.getTime();
+                   LocalDateTime t2 = (next.isRepeated())? next.getStartTime() : next.getTime();
+
+                   if (t1.compareTo(t2) > 0) min = next;
+              }
+              return min;
+       }
+       /**
+         * @return Task with max date from list
+       * */
+       public Task getMaxTask() {
+              Task max = this.getFirstTask();
+              for (Iterator<Task> i = this.iterator(); i.hasNext(); ) {
+                   Task next = i.next();
+                   LocalDateTime t1 = (max.isRepeated())? max.getEndTime() : max.getTime();
+                   LocalDateTime t2 = (next.isRepeated())? next.getEndTime() : next.getTime();
+
+                   if (t1.compareTo(t2) < 0) max = next;
+              }
+              return max;
+       }
 
 
        /**

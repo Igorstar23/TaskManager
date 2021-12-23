@@ -11,9 +11,10 @@ public abstract class Controller {
                    ADD_NEW_TASK { public int getInt() { return 1; } },
                    EDIT_TASK { public int getInt() { return 2; } },
                    DELETE_TASK { public int getInt() { return 3; } },
-                   SHOW_ALL_TASk { public int getInt() { return 4; } },
-                   SHOW_CALENDAR { public int getInt() { return 5; } },
-                   END_ACT { public int getInt() { return 6; } };
+                   SHOW_ALL_TASK { public int getInt() { return 4; } },
+                   SHOW_ALL_CALENDAR { public  int getInt() { return 5; } },
+                   SHOW_CALENDAR { public int getInt() { return 6; } },
+                   END_ACT { public int getInt() { return 7; } };
 
                    public abstract int getInt();
                    public Actions getTypeInt(int type) {
@@ -23,7 +24,7 @@ public abstract class Controller {
                                 case 1 : return Actions.ADD_NEW_TASK;
                                 case 2 : return Actions.EDIT_TASK;
                                 case 3 : return Actions.DELETE_TASK;
-                                case 4 : return Actions.SHOW_ALL_TASk;
+                                case 4 : return Actions.SHOW_ALL_TASK;
                                 case 5 : return Actions.SHOW_CALENDAR;
                                 default : return Actions.END_ACT;
                           }
@@ -43,6 +44,5 @@ public abstract class Controller {
        public int process(AbstractTaskList tasks) { return view.printInfo(tasks); }
        public Actions getTypeAction() { return this.typeAction; }
        public int getIntAction() { return this.typeAction.getInt(); }
-       public abstract AbstractTaskList getTaskList();
-       public abstract boolean isThatAction(Actions e);
+       public boolean isThatAction(Actions e) { return (this.typeAction.equals(e)); }
 }

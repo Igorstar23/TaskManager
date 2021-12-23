@@ -16,8 +16,23 @@ public class Inputer {
        public static final String ERROR_READ_STR = "NONE_STR";
        public static final int ERROR_READ_INT = -1;
        public enum DateFormat {
-              DEF { public String toString() { return "d-MM-yyyy|HH:mm"; } },
-              DEF_POINTS { public String toString() { return "d.MM.yyyy|HH:mm"; } };
+              DEF {
+                     public String toString() { return "dd-MM-yyyy|HH:mm"; }
+                     @Override
+                     public DateTimeFormatter getFormat() {
+                            return DateTimeFormatter.ofPattern(DateFormat.DEF.toString())
+                                    .withZone(ZoneId.systemDefault());
+                     }
+              }, //TODO: after to end this idea...
+              DEF_POINTS {
+                     public String toString() { return "dd.MM.yyyy|HH:mm"; }
+                     @Override
+                     public DateTimeFormatter getFormat() {
+                            return DateTimeFormatter.ofPattern(DateFormat.DEF_POINTS.toString())
+                                    .withZone(ZoneId.systemDefault());
+                     }
+              };
+              public abstract DateTimeFormatter getFormat();
        }
 
        /**
@@ -86,9 +101,7 @@ public class Inputer {
        public static LocalDateTime readDateFromString(String date) {
 
               if (date == null) throw new IllegalArgumentException("Param date is null!");
-
-              DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateFormat.DEF_POINTS.toString()).withZone(ZoneId.systemDefault());
-              return ZonedDateTime.parse(date, formatter).toLocalDateTime();
+              return ZonedDateTime.parse(date, DateFormat.DEF_POINTS.getFormat()).toLocalDateTime();
        }
 
        /**

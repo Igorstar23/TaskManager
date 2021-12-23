@@ -62,4 +62,32 @@ public class Tasks {
               }
               return tempMap;
        }
+       /**
+        * @param list must be not null
+        * @throws IllegalArgumentException if param list is null
+        * */
+       public static Task[] getSortedTasksFromList(AbstractTaskList list) {
+
+              if (list == null) throw new IllegalArgumentException("Param list is null!");
+              Task arr[] = new Task[list.size()];
+
+              for (int i = 0; i < list.size(); i++) {
+                   arr[i] = list.getTask(i);
+              }
+
+              //TODO : change bubble sort :)
+              for (int i = 0; i < list.size(); i++) {
+                   for (int j = 0; j < list.size() - 1; j++) {
+                        LocalDateTime t1 = (arr[j].isRepeated())? arr[j].getStartTime() : arr[j].getTime();
+                        LocalDateTime t2 = (arr[j + 1].isRepeated())? arr[j + 1].getStartTime() : arr[j + 1].getTime();
+
+                        if (t1.compareTo(t2) > 0) {
+                            Task temp = arr[j];
+                            arr[j] = arr[j + 1];
+                            arr[j + 1] = temp;
+                        }
+                   }
+              }
+              return arr;
+       }
 }

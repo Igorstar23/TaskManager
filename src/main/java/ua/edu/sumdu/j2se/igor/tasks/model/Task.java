@@ -2,6 +2,7 @@ package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task implements Serializable {
@@ -162,7 +163,7 @@ public class Task implements Serializable {
               this.repeat = false;
        }
        /**
-        * @return next time of task or -1 if next time of task is out of the time interval or the task is non-active
+        * @return next time of task or null if next time of task is out of the time interval or the task is non-active
         * @param current must be not null
         * @throws IllegalArgumentException if param current is null
         * */
@@ -225,9 +226,22 @@ public class Task implements Serializable {
        @Override
        public String toString() {
 
-              return this.title +( (this.isActive())? " is active " : " isn't active ") + ((this.isRepeated())? "start = " + this.start
-                      + " end = " + this.end + " interval = " + this.interval : " time = " + this.time);
+              return "[" + this.title +( (this.isActive())? " is active " : " isn't active ") + ((this.isRepeated())? "start = "
+                      + this.start + " end = " + this.end + " interval = " + this.interval
+                      + " seconds]": " time = " + this.time + "]");
        }
+       /**
+        * @param format must be not null
+        * @throws IllegalArgumentException if param 'format' is null
+        * */
+       public String toString(DateTimeFormatter format) {
+
+              if (format == null) throw new IllegalArgumentException("Param 'format' is null!");
+              return "["+this.title +( (this.isActive())? " is active " : " isn't active ") + ((this.isRepeated())? "start = "
+                      + this.start.format(format) + " end = " + this.end.format(format) + " interval = " + this.interval
+                      + " seconds]": " time = " + this.time.format(format) + "]");
+       }
+
        /**
          * @return a clone of this instance.
        * */
