@@ -21,6 +21,9 @@ public class MenuController extends Controller{
               this.controllers.add(new AllCalendarController(new AllCalendarView(), Actions.SHOW_ALL_CALENDAR));
               this.controllers.add(new DeleteTaskController(new DeleteTaskView(), Actions.DELETE_TASK));
               this.controllers.add(new EditTaskController(new EditTaskView(), Actions.EDIT_TASK));
+              this.controllers.add(new SaveController(new SaveView(), Actions.SAVE));
+              this.controllers.add(new LoadController(new LoadView(), Actions.LOAD));
+              this.controllers.add(new ExitController(new SaveView(), Actions.END_ACT));
               //TODO: controllers.add(new NEWTypeCont, Actions.NEED_ACT); Это будет наблюдателем, а остальные подписчики:)
        }
 
@@ -36,11 +39,12 @@ public class MenuController extends Controller{
               int act = this.view.printInfo(tasks);
               for ( ; ; ) {
                    for (var ctr : this.controllers) {
-                        act = (ctr.getIntAction() == act)? ctr.process(tasks): act;
+                        act = (ctr.getIntAction() == act && act != 0)? ctr.process(tasks): act;
+
+                        if (act == 0) act = this.view.printInfo(tasks);
                    }
 
-                   if (act == Actions.END_ACT.getInt() || act != 0) break; //TODO : delete act != 0
+                   if (act == Actions.END_ACT.getInt()) return Actions.END_ACT.getInt();
               }
-              return Actions.END_ACT.getInt();
        }
 }

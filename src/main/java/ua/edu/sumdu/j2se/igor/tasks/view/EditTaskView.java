@@ -6,7 +6,6 @@ import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.Task;
 import ua.edu.sumdu.j2se.igor.tasks.model.Tasks;
 
-import javax.management.MBeanRegistration;
 import java.time.LocalDateTime;
 
 public class EditTaskView extends ShowAllTaskView {
@@ -34,7 +33,7 @@ public class EditTaskView extends ShowAllTaskView {
               } else {
                   System.out.println("Task wasn't edit! Returning to global menu...");
               }
-              return Controller.Actions.MENU.getInt();
+              return Controller.Actions.SAVE.getInt();
        }
 
        public void printEditAction(Task editTask) {
@@ -71,10 +70,16 @@ public class EditTaskView extends ShowAllTaskView {
                                   editTask.setTime(Inputer.readDateFromLine());
 
                               } else {
-                                  System.out.print("Enter new start time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
-                                  LocalDateTime start = Inputer.readDateFromLine();
-                                  System.out.print("Enter new end time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
-                                  LocalDateTime end = Inputer.readDateFromLine();
+                                  LocalDateTime start, end;
+                                  while (true) {
+                                      System.out.print("Enter new start time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
+                                      start = Inputer.readDateFromLine();
+                                      System.out.print("Enter new end time of Task(" + Inputer.DateFormat.DEF_POINTS + "): ");
+                                      end = Inputer.readDateFromLine();
+
+                                      if (start.compareTo(end) < 0) break;
+                                      System.out.println("Wrong Interval! start must be > end! Enter again :");
+                                  }
                                   System.out.print("Enter new interval of Task(minute): ");
                                   int interval = Inputer.readInt() * 60;
                                   editTask.setTime(start, end, interval);

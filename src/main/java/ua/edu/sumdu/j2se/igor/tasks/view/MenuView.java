@@ -4,21 +4,49 @@ import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 
+import java.util.HashSet;
+import java.util.List;
+
 public class MenuView implements View{
+       private String[] actionMenu = new String[] {
+               "for add new task to your task list",
+               "for edit task",
+               "for delete task from your task list",
+               "for show all tasks",
+               "for show all tasks in calendar",
+               "for show calendar for need time",
+               "for save changing",
+               "for load saving",
+               "for exit"
+       };
+       private HashSet<Integer> notAvailAbleActions = new HashSet<Integer>() {};
+
+       {
+              notAvailAbleActions.add(Controller.Actions.DELETE_TASK.getInt() - 1);
+              notAvailAbleActions.add(Controller.Actions.EDIT_TASK.getInt() - 1);
+              notAvailAbleActions.add(Controller.Actions.SHOW_ALL_CALENDAR.getInt() - 1);
+              notAvailAbleActions.add(Controller.Actions.SHOW_CALENDAR.getInt() - 1);
+       }
 
        @Override
        public int printInfo(AbstractTaskList list) {
               System.out.println("\nEnter variant action : \n");
-              System.out.println("Enter 1 for add new task to your task list");
-              System.out.println("Enter 2 for edit task");
-              System.out.println("Enter 3 for delete task from your task list");
-              System.out.println("Enter 4 for show all tasks");
-              System.out.println("Enter 5 for show all tasks in calendar");
-              System.out.println("Enter 6 for show calendar for need time");
-              System.out.println("Enter other number not in variants and without 0 for exit");
+              for (int i = 0; i < actionMenu.length; i++) {
+
+                   if (list.size() == 0) {
+
+                       if (this.notAvailAbleActions.contains(i)) continue;
+                   }
+                   System.out.println("Enter " + (i + 1) + " " + this.actionMenu[i]);
+              }
               int choice = Controller.Actions.MENU.getInt();
 
               choice = Inputer.readInt();
+
+              if (list.size() == 0) {
+
+                  if (this.notAvailAbleActions.contains(choice - 1)) choice = Controller.Actions.END_ACT.getInt();
+              }
               return choice;
        }
 }

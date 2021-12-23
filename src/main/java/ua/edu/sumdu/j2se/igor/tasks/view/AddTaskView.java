@@ -14,7 +14,7 @@ public class AddTaskView implements View {
               list.add(this.getTaskFromConsole());
               System.out.println("\nNew task was added!");
               System.out.println(list.getLastTask());
-              return Controller.Actions.MENU.getInt();
+              return Controller.Actions.SAVE.getInt();
        }
 
        public Task getTaskFromConsole() {

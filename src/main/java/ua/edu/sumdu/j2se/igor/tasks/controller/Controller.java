@@ -14,7 +14,9 @@ public abstract class Controller {
                    SHOW_ALL_TASK { public int getInt() { return 4; } },
                    SHOW_ALL_CALENDAR { public  int getInt() { return 5; } },
                    SHOW_CALENDAR { public int getInt() { return 6; } },
-                   END_ACT { public int getInt() { return 7; } };
+                   SAVE { public int getInt() { return 7; } },
+                   LOAD { public int getInt() {return 8; } },
+                   END_ACT { public int getInt() { return 9; } };
 
                    public abstract int getInt();
                    public Actions getTypeInt(int type) {

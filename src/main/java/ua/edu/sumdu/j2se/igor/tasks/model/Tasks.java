@@ -75,7 +75,6 @@ public class Tasks {
                    arr[i] = list.getTask(i);
               }
 
-              //TODO : change bubble sort :)
               for (int i = 0; i < list.size(); i++) {
                    for (int j = 0; j < list.size() - 1; j++) {
                         LocalDateTime t1 = (arr[j].isRepeated())? arr[j].getStartTime() : arr[j].getTime();

@@ -23,7 +23,7 @@ public class Inputer {
                             return DateTimeFormatter.ofPattern(DateFormat.DEF.toString())
                                     .withZone(ZoneId.systemDefault());
                      }
-              }, //TODO: after to end this idea...
+              },
               DEF_POINTS {
                      public String toString() { return "dd.MM.yyyy|HH:mm"; }
                      @Override

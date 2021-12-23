@@ -122,7 +122,7 @@ public class TaskIO {
        public static void write(AbstractTaskList tasks, Writer out) throws IOException {
 
               if (out == null) throw new IllegalArgumentException("Pram 'out' is null!");
-              GsonBuilder gsonBuilder = new GsonBuilder();
+              GsonBuilder gsonBuilder = new GsonBuilder(); // TODO : add Adapter to datatimeformatter
               out.write(gsonBuilder.setPrettyPrinting().registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
                          @Override
                          public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
