@@ -1,0 +1,104 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package "model" {
+    +class Task <<Serializable>> {
+          -title:String
+          -active:boolean
+          -repeat:boolean
+          -time:LocalDateTime
+          -start:LocalDateTime
+          -end:LocalDateTime
+          -interval:int
+          +resetTimeInterval():void
+          +nextTimeAfter(current:LocalDateTime):LocalDateTime
+    }
+
+    +class TaskIO {
+          +write(tasks:AbstractTaskList, out:OutputStream):void
+          +read(tasks:AbstractTaskList, inputStream:InputStream):void
+          +writeBinary(tasks:AbstractTaskList, file:File):void
+          +readBinary(tasks:AbstractTaskList, file:File):void
+
+          +write(tasks:AbstractTaskList, out:Writer):void
+          +read(tasks:AbstractTaskList, in:Reader):void
+          +writeText(tasks:AbstractTaskList, file:File):void
+          +readTeaxt(tasks:AbstractTaskList, file:File):void
+    }
+
+    +class Tasks {
+          +incoming(tasks:Iterable<Task>, start:LocalDateTime, end:LocalDateTime):Iterable<Task>
+          +calendar(tasks:Iterable<Task>, start:LocalDateTime, end:LocalDateTime):SortedMap<LocalDateTime, Set<Task>>
+          +getSortedTasksFrom(list:AbstractTaskList):Task[]
+    }
+
+    +abstract class AbstractTaskList <<Iterable>>,<<Cloneable>>, <<Serializable>> {
+             +abstract getTask(index:int):Task
+             +abstract remove(task:Task):boolean
+             +abstract size():int
+             +abstract getFirstTask():Task
+             +abstract getLastTask():Task
+             +abstract add(task:Task):void
+             +abstract getStream():Stream<Task>
+
+             +final incoming(from:LocalDateTime, to:LocalDateTime):AbstractTaskList
+             +addAll(tasks:Task[]):void
+             +addAllFromList(tasks:AbstractTaskList):void
+             +getMinTask():Task
+             +getMaxTask():Task
+    }
+
+    +class ArrayTaskList extends AbstractTaskList {
+          -list:Task[]
+          +add(task:Task):void
+          +remove(task:Task):boolean
+          +size():int
+          +getTask(index:int):Task
+          +getFirstTask():Task
+          +getLastTask():Task
+          +iterator():Iterator<Task>
+          +getStream():Stream<Task>
+    }
+    Task --o ArrayTaskList
+
+
+    +class LinkedTaskList extends AbstractTaskList {
+          -first:Node
+          -last:Node
+          +add(task:Task):void
+          +remove():boolean
+          +remove(task:Task):boolean
+          +size():int
+          +getTask(index:int):Task
+          +getLastTask():Task
+          +getFirstTask():Task
+          +isEmpty():boolean
+          +iterator():Iterator<Task>
+          +getStream():Stream<Task>
+    }
+    class Node {
+         -item:Task
+         -nextNode:Node
+         -prevNode:Node
+         +setNextNode(nextNode:Node):void
+         +setPrevNode(prevNode:Node):void
+         +getNextNode():Node
+         +getPrevNode():Node
+         +getItem():Task
+    }
+    LinkedTaskList "1" *-- "...n" Node
+
+    +class TaskListFactory {
+          +static createTaskList(type:ListType.type):AbstractTaskList
+    }
+    +class ListTypes{
+          +types:enum
+          +static getTypeList(taskObj:Iterable<Task>):ListTypes.types
+    }
+    +enum types{
+         ARRAY
+         LINKED
+    }
+}
+
+@enduml

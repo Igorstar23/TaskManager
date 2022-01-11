@@ -17,7 +17,7 @@ public class MenuView implements View{
                "for show calendar for need time",
                "for save changing",
                "for load saving",
-               "for exit"
+               "or more num for exit"
        };
        private HashSet<Integer> notAvailAbleActions = new HashSet<Integer>() {};
 
@@ -39,13 +39,15 @@ public class MenuView implements View{
                    }
                    System.out.println("Enter " + (i + 1) + " " + this.actionMenu[i]);
               }
-              int choice = Controller.Actions.MENU.getInt();
+              int choice = Controller.Actions.MENU.getInt(); //TODO: remove getInt()
 
               choice = Inputer.readInt();
 
-              if (list.size() == 0) {
+              if (list.size() == 0 || choice > this.actionMenu.length) {
 
-                  if (this.notAvailAbleActions.contains(choice - 1)) choice = Controller.Actions.END_ACT.getInt();
+                  if (this.notAvailAbleActions.contains(choice - 1) || choice > this.actionMenu.length) {
+                      choice = Controller.Actions.END_ACT.getInt();
+                  }
               }
               return choice;
        }

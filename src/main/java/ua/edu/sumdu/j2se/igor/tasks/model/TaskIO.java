@@ -1,6 +1,7 @@
 package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import com.google.gson.*;
+import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TaskIO {
        /**
@@ -123,6 +125,12 @@ public class TaskIO {
 
               if (out == null) throw new IllegalArgumentException("Pram 'out' is null!");
               GsonBuilder gsonBuilder = new GsonBuilder(); // TODO : add Adapter to datatimeformatter
+              gsonBuilder.setPrettyPrinting().registerTypeAdapter(DateTimeFormatter.class, new JsonSerializer<DateTimeFormatter>() {
+                  @Override
+                  public JsonElement serialize(DateTimeFormatter dateTimeFormatter, Type type, JsonSerializationContext jsonSerializationContext) {
+                      return new JsonPrimitive(dateTimeFormatter.toString());
+                  }
+              });
               out.write(gsonBuilder.setPrettyPrinting().registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
                          @Override
                          public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -144,6 +152,12 @@ public class TaskIO {
 
               if (in == null) throw new IllegalArgumentException("Param 'in' is null!");
               GsonBuilder g = new GsonBuilder();
+              g.registerTypeAdapter(DateTimeFormatter.class, new JsonDeserializer<DateTimeFormatter>() {
+                        @Override
+                        public DateTimeFormatter deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                               return DateTimeFormatter.ofPattern(jsonElement.getAsString());
+                        }
+              });
               g.registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
 
                         @Override

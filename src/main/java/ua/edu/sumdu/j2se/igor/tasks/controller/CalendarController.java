@@ -9,7 +9,8 @@ public class CalendarController extends Controller{
               this.typeAction = Actions.SHOW_CALENDAR;
        }
 
-       public CalendarController(View view, Actions act) {
-              super(view, act);
-       }
+       public CalendarController(View view, Actions act) { super(view, act); }
+
+       @Override
+       public int process(AbstractTaskList tasks) { return super.process(tasks); }
 }

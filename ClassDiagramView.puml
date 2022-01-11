@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package "view" {
+    +interface View {
+        +abstract printInfo(list:AbstractTaskList):int
+    }
+
+    +class AddTaskView implements View {
+          +printInfo(list:AbstractTaskList):int
+          +getTaskFromConsole():Task
+    }
+
+    +class AllCalendarView extends CalendarView {
+          +printInfo(list:AbstractTaskList):int
+    }
+
+    +class CalendarView implements View {
+          +printInfo(list:AbstractTaskList):int
+          +printCalendar(list:AbstractTaskList, start:LocalDateTime, end:LocalDateTime):void
+    }
+
+    +class DeleteTaskView extends ShowAllTaskView {
+          +printInfo(list:AbstractTaskList):int
+    }
+
+    +class EditTaskView extends ShowAllTaskView {
+          +printInfo(list:AbstractTaskList):int
+          +printEditAction(editTask:Task):void
+          +printEditingTask(editTask:Task, continued:boolean):boolean
+    }
+
+    +class LoadViw implements View {
+          -static logger:Logger
+          +printInfo(list:AbstractTaskList):int
+    }
+
+    +class MenuView implements View {
+          -actionMenu:String[]
+          -notAvailAbleActions:HashSet<Integer>
+          +printInfo(list:AbstractTaskList):int
+    }
+
+    +class SaveView implements View {
+          -static logger:Logger
+          +printInfo(list:AbstractTaskList):int
+    }
+
+    +class ShowAllTaskView implements View {
+          +printInfo(list:AbstractTaskList):int
+    }
+}
+
+@enduml

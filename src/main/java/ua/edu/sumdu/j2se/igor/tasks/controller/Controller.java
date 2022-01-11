@@ -19,18 +19,6 @@ public abstract class Controller {
                    END_ACT { public int getInt() { return 9; } };
 
                    public abstract int getInt();
-                   public Actions getTypeInt(int type) {
-
-                          switch (type) {
-                                case 0 : return Actions.MENU;
-                                case 1 : return Actions.ADD_NEW_TASK;
-                                case 2 : return Actions.EDIT_TASK;
-                                case 3 : return Actions.DELETE_TASK;
-                                case 4 : return Actions.SHOW_ALL_TASK;
-                                case 5 : return Actions.SHOW_CALENDAR;
-                                default : return Actions.END_ACT;
-                          }
-                   }
        }
 
        public Controller(View view) {

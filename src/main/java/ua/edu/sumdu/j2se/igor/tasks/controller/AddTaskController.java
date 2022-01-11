@@ -20,17 +20,5 @@ public class AddTaskController extends Controller {
        }
 
        @Override
-       public int process(AbstractTaskList tasks) {
-              return super.process(tasks);
-       }
-
-       @Override
-       public Actions getTypeAction() {
-              return super.getTypeAction();
-       }
-
-       @Override
-       public int getIntAction() {
-              return super.getIntAction();
-       }
+       public int process(AbstractTaskList tasks) { return super.process(tasks); }
 }

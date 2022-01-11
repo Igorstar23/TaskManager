@@ -1,15 +1,15 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
+//import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.controller.MenuController;
 import ua.edu.sumdu.j2se.igor.tasks.model.LinkedTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.Task;
-import ua.edu.sumdu.j2se.igor.tasks.model.TaskIO;
 import ua.edu.sumdu.j2se.igor.tasks.view.MenuView;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+
 
 
 public class Main {
@@ -23,6 +23,8 @@ public class Main {
 					        //new Task("Four", LocalDateTime.now().minusHours(1), LocalDateTime.now().plusDays(1), 60*60*2,true)
 			  });
 		      Controller ctr = new MenuController(new MenuView(), arr);
+		      //Logger.getLogger(Main.class).debug("Start process ...");
 			  ctr.process(arr);
+			  //Logger.getLogger(Main.class).debug("End process ...");
 	   }
 }

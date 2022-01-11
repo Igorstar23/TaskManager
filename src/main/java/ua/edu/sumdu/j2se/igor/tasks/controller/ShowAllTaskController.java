@@ -13,4 +13,7 @@ public class ShowAllTaskController extends Controller {
        public ShowAllTaskController(View view, Actions act) {
              super(view, act);
        }
+
+       @Override
+       public int process(AbstractTaskList tasks) { return super.process(tasks); }
 }
