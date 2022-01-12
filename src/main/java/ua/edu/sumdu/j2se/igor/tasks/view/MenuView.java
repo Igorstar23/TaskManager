@@ -39,7 +39,7 @@ public class MenuView implements View{
               }
               int choice = Controller.Actions.MENU.getInt(); //TODO: remove getInt()
 
-              choice = Inputer.readInt();
+              while ((choice = Inputer.readInt()) == Inputer.ERROR_READ_INT) System.out.println("Wrong Input integer! Repeat value : ");
 
               if (list.size() == 0 || choice > this.actionMenu.length) {
 

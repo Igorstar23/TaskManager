@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
-//import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,9 +47,13 @@ public class Inputer {
                    buf = Integer.parseInt(Inputer.reader.readLine());
 
               } catch (IOException e) {
+                   Logger.getLogger(Inputer.class).debug("Entered wrong integer : ", e);
                    buf =  new Scanner(System.in).nextInt();
 
-              } catch (Exception e ) { return ERROR_READ_INT; }
+              } catch (Exception e ) {
+                     Logger.getLogger(Inputer.class).error("Parse integer error : ", e);
+                     return ERROR_READ_INT;
+              }
 
               return buf;
        }
@@ -63,6 +67,7 @@ public class Inputer {
                     buf = Inputer.reader.readLine();
 
               } catch (IOException e) {
+                    Logger.getLogger(Inputer.class).debug("Entered wrong String : ", e);
                     buf = new Scanner(System.in).nextLine();
 
               } catch (Exception e) { return ERROR_READ_STR; }
@@ -103,7 +108,7 @@ public class Inputer {
        public static LocalDateTime readDateFromString(String date) {
 
               if (date == null) {
-                  //Logger.getLogger(Inputer.class).debug("String date is null");
+                  Logger.getLogger(Inputer.class).error("String date is null");
                   throw new IllegalArgumentException("Param date is null!");
               }
               return ZonedDateTime.parse(date, DateFormat.DEF_POINTS.getFormat()).toLocalDateTime();
@@ -129,7 +134,7 @@ public class Inputer {
 
                      } catch (DateTimeParseException e) {
                            System.out.print("Wrong format date!\nEnter date again" + "(" + DateFormat.DEF_POINTS + "): ");
-                           //Logger.getLogger(Inputer.class).debug("didn't read date from string " + date + " :" + e);
+                           Logger.getLogger(Inputer.class).debug("didn't read date from string " + date + " :" + e);
                            date = ERROR_READ_STR;
                      }
               }

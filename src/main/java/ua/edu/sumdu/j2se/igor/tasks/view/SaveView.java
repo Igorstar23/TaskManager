@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
-//import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.TaskIO;
@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaveView implements View {
-       //private static Logger logger = Logger.getLogger(SaveView.class);
 
        @Override
        public int printInfo(AbstractTaskList list) {
@@ -18,16 +17,16 @@ public class SaveView implements View {
               if (!Inputer.readBoolFromLine()) return Controller.Actions.MENU.getInt();
 
               try {
-                  //logger.debug("Start writing data...");
+                  Logger.getLogger(SaveView.class).debug("Start writing data...");
                   TaskIO.writeBinary(list, new File("saving.out"));
 
               } catch (IOException e) {
                   System.out.println("It wasn't save list!");
-                  //logger.debug("Didn't write data!", e);
+                  Logger.getLogger(SaveView.class).debug("Didn't write data!", e);
                   return Controller.Actions.SAVE.getInt();
               }
               System.out.println("\nChanging was saved!\n");
-              //logger.debug("data was saved");
+              Logger.getLogger(SaveView.class).debug("data was saved");
               return Controller.Actions.MENU.getInt();
        }
 }

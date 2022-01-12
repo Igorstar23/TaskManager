@@ -1,6 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks;
 
-//import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.controller.MenuController;
 import ua.edu.sumdu.j2se.igor.tasks.model.LinkedTaskList;
@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class Main {
 
 	   public static void main(String[] args) throws IOException {
-
 		      LinkedTaskList arr = new LinkedTaskList(new Task[] {
 					  		//new Task("First", LocalDateTime.now(), true),
 					        //new Task("Two", LocalDateTime.now().plusHours(1), true),
@@ -23,8 +22,8 @@ public class Main {
 					        //new Task("Four", LocalDateTime.now().minusHours(1), LocalDateTime.now().plusDays(1), 60*60*2,true)
 			  });
 		      Controller ctr = new MenuController(new MenuView(), arr);
-		      //Logger.getLogger(Main.class).debug("Start process ...");
+		      Logger.getLogger(Main.class).debug("Start process ...");
 			  ctr.process(arr);
-			  //Logger.getLogger(Main.class).debug("End process ...");
+			  Logger.getLogger(Main.class).debug("End process ...");
 	   }
 }

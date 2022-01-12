@@ -40,7 +40,6 @@ package "view" {
     }
 
     +class LoadViw implements View {
-          -static logger:Logger
           +printInfo(list:AbstractTaskList):int
     }
 
@@ -51,7 +50,6 @@ package "view" {
     }
 
     +class SaveView implements View {
-          -static logger:Logger
           +printInfo(list:AbstractTaskList):int
     }
 
