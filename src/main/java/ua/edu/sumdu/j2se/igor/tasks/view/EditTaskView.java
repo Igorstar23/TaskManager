@@ -1,7 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
-import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.Task;
 import ua.edu.sumdu.j2se.igor.tasks.model.Tasks;

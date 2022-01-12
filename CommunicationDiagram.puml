@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+usecase zero as "0" #lightblue;line:blue
+usecase one as "1"
+usecase two as "2"
+usecase three as "3"
+usecase four as "4"
+usecase five as "5"
+usecase six as "6"
+usecase seven_add as "7"
+usecase seven as "8"
+usecase eight as "9"
+usecase nine as "10"
+usecase ten as "11" #Lightblue;line:blue
+
+skinparam usecase {
+  ' задаем светлозеленый цвет для фона классов по умолчанию
+  BackgroundColor LightGreen
+  ' задаем синий цвет для связей классов по умолчанию
+  ArrowColor Blue
+  ' задаем красный цвет для контуров классов по умолчанию
+  BorderColor Green
+}
+
+skinparam zeroBorderColor red
+
+zero -> one
+one -> two : SHOW_ALL_TASK
+one -> three : SHOW_ALL_CALENDAR
+one -> four : SHOW_CALENDAR
+one -> five : EDIT_TASK
+one -> six : DELETE_TASK
+one -> seven : SAVE
+one -> eight : LOAD
+one -> nine : END_ACT
+one -> seven_add : ADD_NEW_TASK
+
+two -[#teal] one
+two --[#teal] five
+three -[#teal] one
+four -[#teal] one
+five -[#teal] one
+five --> two : SHOW_ALL_TASK
+five --> seven : SAVE
+
+six -[#teal] one
+six --> two : SHOW_ALL_TASK
+two --[#teal] six
+
+seven -[#teal] one
+seven --[#teal] nine
+seven --[#teal] five
+eight -[#teal] one
+nine --> seven : SAVE
+nine --> ten
+seven_add -[#teal] one
+
+note as n
+0.Початок роботи
+1.Меню дій
+2.Список всіх задач
+3.Календар зі всіма задачами
+4.Календар для заданого інтервалу
+5.Зміна задачі
+6.Задача видалена
+7.Задача додана
+8.Збереження поточних задач в файл "saving.out"
+9.Завантажено задачі з файлу "saving.out" і додано в
+10.Ініціалізовано завершення роботи
+11.Завершення роботи програми
+end note
+
+@enduml

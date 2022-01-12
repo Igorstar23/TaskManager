@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.igor.tasks.controller;
+package ua.edu.sumdu.j2se.igor.tasks.view;
 
 //import org.apache.log4j.Logger;
 

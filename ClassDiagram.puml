@@ -1,6 +1,15 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+skinparam class {
+  ' задаем светлозеленый цвет для фона классов по умолчанию
+  BackgroundColor LightGreen
+  ' задаем синий цвет для связей классов по умолчанию
+  ArrowColor      Green
+  ' задаем красный цвет для контуров классов по умолчанию
+  BorderColor     Green
+}
+
 package "model" {
     +class Task <<Serializable>> {
           -title:String
@@ -47,6 +56,15 @@ package "model" {
              +getMinTask():Task
              +getMaxTask():Task
     }
+    AbstractTaskList ..> Task
+    TaskIO ..> AbstractTaskList
+    Tasks ..> AbstractTaskList
+    ListTypes *-- types
+    TaskListFactory .> ListTypes
+    AbstractTaskList ..> ListTypes
+    AbstractTaskList ..> TaskListFactory
+    Tasks ..> ListTypes
+    Tasks ..> TaskListFactory
 
     +class ArrayTaskList extends AbstractTaskList {
           -list:Task[]
@@ -59,7 +77,7 @@ package "model" {
           +iterator():Iterator<Task>
           +getStream():Stream<Task>
     }
-    Task --o ArrayTaskList
+    Task "...n" --* "1" ArrayTaskList
 
 
     +class LinkedTaskList extends AbstractTaskList {
@@ -87,6 +105,7 @@ package "model" {
          +getItem():Task
     }
     LinkedTaskList "1" *-- "...n" Node
+    Task --o Node
 
     +class TaskListFactory {
           +static createTaskList(type:ListType.type):AbstractTaskList

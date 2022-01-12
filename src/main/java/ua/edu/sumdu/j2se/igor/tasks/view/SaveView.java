@@ -2,7 +2,6 @@ package ua.edu.sumdu.j2se.igor.tasks.view;
 
 //import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
-import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.TaskIO;
 

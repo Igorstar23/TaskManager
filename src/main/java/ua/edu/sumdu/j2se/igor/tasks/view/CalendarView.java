@@ -1,13 +1,9 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
-import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
-import ua.edu.sumdu.j2se.igor.tasks.model.Task;
 import ua.edu.sumdu.j2se.igor.tasks.model.Tasks;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class CalendarView implements View {

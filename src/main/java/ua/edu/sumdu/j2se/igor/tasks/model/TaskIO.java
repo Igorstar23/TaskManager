@@ -1,7 +1,6 @@
 package ua.edu.sumdu.j2se.igor.tasks.model;
 
 import com.google.gson.*;
-import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 
 import java.io.*;
 import java.lang.reflect.Type;

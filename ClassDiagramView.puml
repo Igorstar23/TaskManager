@@ -1,6 +1,15 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+skinparam class {
+  ' задаем светлозеленый цвет для фона классов по умолчанию
+  BackgroundColor LightGreen
+  ' задаем синий цвет для связей классов по умолчанию
+  ArrowColor      Green
+  ' задаем красный цвет для контуров классов по умолчанию
+  BorderColor     Green
+}
+
 package "view" {
     +interface View {
         +abstract printInfo(list:AbstractTaskList):int
@@ -49,6 +58,29 @@ package "view" {
     +class ShowAllTaskView implements View {
           +printInfo(list:AbstractTaskList):int
     }
+
+    +class Inputer {
+              -static reader:BufferedReader
+              +DateFormat:enum
+              +static readInt():int
+              +static readLine():String
+              +static readBool():boolean
+              +static readBoolFromLine():boolean
+              +static readDateFromString(date:String):LocalDateTime
+              +static readDateFromLine():LocalDateTime
+        }
+        enum DateFormat {
+             DEF
+             DEF_POINTS
+             +abstract getFormat():DateTimeFormatter
+        }
+        Inputer *-- DateFormat
+        AddTaskView ..> Inputer
+        CalendarView ..> Inputer
+        DeleteTaskView ..> Inputer
+        EditTaskView ..> Inputer
+        MenuView ..> Inputer
+        SaveView ..> Inputer
 }
 
 @enduml

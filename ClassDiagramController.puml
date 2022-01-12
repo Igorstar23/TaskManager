@@ -1,6 +1,15 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+skinparam class {
+  ' задаем светлозеленый цвет для фона классов по умолчанию
+  BackgroundColor LightGreen
+  ' задаем синий цвет для связей классов по умолчанию
+  ArrowColor      Green
+  ' задаем красный цвет для контуров классов по умолчанию
+  BorderColor     Green
+}
+
 package "controller" {
     +abstract class Controller{
              #view:View
@@ -26,22 +35,6 @@ package "controller" {
         +abstract getInt():int
     }
 
-    +class Inputer {
-          -static reader:BufferedReader
-          +DateFormat:enum
-          +static readInt():int
-          +static readLine():String
-          +static readBool():boolean
-          +static readBoolFromLine():boolean
-          +static readDateFromString(date:String):LocalDateTime
-          +static readDateFromLine():LocalDateTime
-    }
-    enum DateFormat {
-         DEF
-         DEF_POINTS
-         +abstract getFormat():DateTimeFormatter
-    }
-
     +class MenuController extends Controller {
           -tasks:AbstractTaskList
           -controllers:List<Controller>
@@ -51,11 +44,20 @@ package "controller" {
           +getTypeAction():Actions
           +process(tasks:AbstractTaskList):int
     }
+    MenuController "0..1" o--[#red]- "0..*" Controller #text:red
+    Controller *-[#blue]- Actions
+    together {
+        class MenuController
+        class Controller
+    }
+
 
     +class AddTaskController extends Controller {
           +isThatAction(e:Actions):boolean
           +process(tasks:AbstractTaskList):int
     }
+    skinparam groupInheritance 3
+
 
     +class AllCalendarController extends Controller{
            +isThatAction(e:Actions):boolean

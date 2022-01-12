@@ -1,11 +1,9 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
-import ua.edu.sumdu.j2se.igor.tasks.controller.Inputer;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 
 import java.util.HashSet;
-import java.util.List;
 
 public class MenuView implements View{
        private String[] actionMenu = new String[] {
