@@ -45,7 +45,7 @@ package "view" {
 
     +class MenuView implements View {
           -actionMenu:String[]
-          -notAvailAbleActions:HashSet<Integer>
+          -notAvailAbleActions:int[]
           +printInfo(list:AbstractTaskList):int
     }
 

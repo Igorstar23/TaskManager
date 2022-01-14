@@ -12,6 +12,7 @@ public class AllCalendarView extends CalendarView {
                       : list.getMinTask().getTime().minusDays(30);
               LocalDateTime end = (list.getMaxTask().isRepeated())? list.getMaxTask().getEndTime().plusDays(1)
                       : list.getMaxTask().getTime().plusDays(30);
+              System.out.println("\nCalendar for all tasks :\n");
               this.printCalendar(list, start, end);
               return 0;
        }
