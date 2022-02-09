@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 
 public class EditTaskView extends ShowAllTaskView {
 
+       /**
+       * For print info need for editing task
+       * */
        @Override
        public int printInfo(AbstractTaskList list) {
               super.printInfo(list);
@@ -34,7 +37,9 @@ public class EditTaskView extends ShowAllTaskView {
               }
               return Controller.Actions.SAVE.getInt();
        }
-
+       /**
+       * For print action list need for edit task
+       * */
        public void printEditAction(Task editTask) {
               System.out.println("Enter variant edit action : ");
               System.out.println("Enter 1 for rename title");
@@ -44,7 +49,9 @@ public class EditTaskView extends ShowAllTaskView {
               if (!editTask.isRepeated()) System.out.println("Enter 4 for set time");
               System.out.println("Enter other number not in variants for exit from edit action menu");
        }
-
+       /**
+       * For print info for editing and save changing of task
+       * */
        public boolean printEditingTask(Task editTask, boolean continued) {
               this.printEditAction(editTask);
 

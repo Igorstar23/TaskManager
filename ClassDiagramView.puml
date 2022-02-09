@@ -18,6 +18,7 @@ package "view" {
     +class AddTaskView implements View {
           +printInfo(list:AbstractTaskList):int
           +getTaskFromConsole():Task
+          +isCorrectDate(date:LocalDateTime):boolean
     }
 
     +class AllCalendarView extends CalendarView {
@@ -66,6 +67,8 @@ package "view" {
               +static readBoolFromLine():boolean
               +static readDateFromString(date:String):LocalDateTime
               +static readDateFromLine():LocalDateTime
+
+              +static compareDates(t:LocalDateTime, t2:LocalDateTime):int
         }
         enum DateFormat {
              DEF

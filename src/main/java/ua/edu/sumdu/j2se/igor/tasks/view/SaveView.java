@@ -9,7 +9,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class SaveView implements View {
+       private static final Logger LOGGER = Logger.getLogger(SaveView.class);
 
+       /**
+       * For print info for save of task
+       * */
        @Override
        public int printInfo(AbstractTaskList list) {
               System.out.println("\nDo you want to save changing(y/n)? : ");
@@ -17,16 +21,16 @@ public class SaveView implements View {
               if (!Inputer.readBoolFromLine()) return Controller.Actions.MENU.getInt();
 
               try {
-                  Logger.getLogger(SaveView.class).debug("Start writing data...");
+                  LOGGER.debug("Start writing data...");
                   TaskIO.writeBinary(list, new File("saving.out"));
 
               } catch (IOException e) {
                   System.out.println("It wasn't save list!");
-                  Logger.getLogger(SaveView.class).debug("Didn't write data!", e);
+                  LOGGER.debug("Didn't write data!", e);
                   return Controller.Actions.SAVE.getInt();
               }
               System.out.println("\nChanging was saved!\n");
-              Logger.getLogger(SaveView.class).debug("data was saved");
+              LOGGER.debug("data was saved");
               return Controller.Actions.MENU.getInt();
        }
 }

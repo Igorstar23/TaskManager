@@ -188,6 +188,33 @@ public class Task implements Serializable {
               return this.time;
        }
 
+       /**
+       * get all dates of notification for this task
+       * */
+       public LocalDateTime[] getAllNotifyDates() {
+              LocalDateTime next = this.getTime();
+              LocalDateTime[] temp = null;
+
+              if (!this.isRepeated()) {
+                  temp = new LocalDateTime[1];
+                  temp[0] = this.getTime();
+                  return temp;
+              }
+              int count = 0;
+              while (Notification.compareTimes(next, this.getEndTime()) <= 0) {
+                     count++;
+                     next = next.plusSeconds(this.getRepeatInterval());
+              }
+              temp = new LocalDateTime[count];
+              next = this.getTime();
+              count = 0;
+              while (Notification.compareTimes(next, this.getEndTime()) <= 0) {
+                     temp[count++] = next;
+                     next = next.plusSeconds(this.getRepeatInterval());
+              }
+              return temp;
+       }
+
        @Override
        public boolean equals(Object obj) {
 

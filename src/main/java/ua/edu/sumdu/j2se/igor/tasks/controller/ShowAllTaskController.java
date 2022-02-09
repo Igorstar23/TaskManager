@@ -11,7 +11,7 @@ public class ShowAllTaskController extends Controller {
        }
 
        public ShowAllTaskController(View view, Actions act) {
-             super(view, act);
+              super(view, act);
        }
 
        @Override

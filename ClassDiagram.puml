@@ -48,6 +48,7 @@ package "model" {
              +abstract getFirstTask():Task
              +abstract getLastTask():Task
              +abstract add(task:Task):void
+             +abstract setNotificator(ntf:Notificator):void
              +abstract getStream():Stream<Task>
 
              +final incoming(from:LocalDateTime, to:LocalDateTime):AbstractTaskList
@@ -56,6 +57,7 @@ package "model" {
              +getMinTask():Task
              +getMaxTask():Task
     }
+
     AbstractTaskList ..> Task
     TaskIO ..> AbstractTaskList
     Tasks ..> AbstractTaskList
@@ -68,6 +70,8 @@ package "model" {
 
     +class ArrayTaskList extends AbstractTaskList {
           -list:Task[]
+          -ntf:Notificator
+
           +add(task:Task):void
           +remove(task:Task):boolean
           +size():int
@@ -76,13 +80,17 @@ package "model" {
           +getLastTask():Task
           +iterator():Iterator<Task>
           +getStream():Stream<Task>
+
+          +setNotificator(ntf:Notificator):void
     }
     Task "...n" --* "1" ArrayTaskList
-
+    ArrayTaskList ..> Notificator
 
     +class LinkedTaskList extends AbstractTaskList {
           -first:Node
           -last:Node
+          -ntf:Notificator
+
           +add(task:Task):void
           +remove():boolean
           +remove(task:Task):boolean
@@ -93,6 +101,8 @@ package "model" {
           +isEmpty():boolean
           +iterator():Iterator<Task>
           +getStream():Stream<Task>
+
+          +setNotificator(ntf:Notificator):void
     }
     class Node {
          -item:Task
@@ -105,6 +115,7 @@ package "model" {
          +getItem():Task
     }
     LinkedTaskList "1" *-- "...n" Node
+    LinkedTaskList ..> Notificator
     Task --o Node
 
     +class TaskListFactory {
@@ -118,6 +129,39 @@ package "model" {
          ARRAY
          LINKED
     }
+
+    +class Notification {
+          -task:Task
+          -notifyDates:LocalDateTime[]
+
+          +updateDates():void
+          +isActual():boolean
+          +isTimeToNotify(time:LocalDateTime):boolean
+          +toNotify(notifuTime:LocalDateTime):void
+          +checkTask():void
+
+          +static compareTimes(t:LocalDateTime, t2:LocalDateTime):int
+          +static timesEquals(t:LocalDateTime, t2:LocalDateTime):boolean
+    }
+    Task ..> Notification
+
+    +class NotificationThread extends Thread {
+          -ntf:Notification
+          +run():void
+    }
+    Notification ..> NotificationThread
+
+    +class Notificator {
+          -list:AbstractTaskList
+          -ntfs:ArrayList<NotificationThread>
+
+          +assignThreads():void
+          +startThreads():void
+          +assignThreadToTask(task:Task):void
+          +removeThreadForTask(task:Task):void
+    }
+    AbstractTaskList .> Notificator
+    NotificationThread "...n" --o "1" Notificator
 }
 
 @enduml

@@ -1,6 +1,5 @@
 package ua.edu.sumdu.j2se.igor.tasks.view;
 
-import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.model.Tasks;
 
@@ -19,8 +18,10 @@ public class CalendarView implements View {
               this.printCalendar(list, start, end);
               return 0;
        }
+       /**
+       * Print all calendar for a list in need format
+       * */
        public void printCalendar(AbstractTaskList list, LocalDateTime start, LocalDateTime end) {
-              Logger.getLogger(CalendarView.class).debug("Start print calendar ...");
               for (var el : Tasks.calendar(list, start, end).entrySet()) {
                      System.out.println(el.getKey().format(Inputer.DateFormat.DEF_POINTS.getFormat()) + " : "
                              + el.getValue().stream().map(e->e.toString(Inputer.DateFormat.DEF_POINTS.getFormat()))

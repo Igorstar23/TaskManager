@@ -7,6 +7,11 @@ import ua.edu.sumdu.j2se.igor.tasks.model.Task;
 import ua.edu.sumdu.j2se.igor.tasks.model.Tasks;
 
 public class DeleteTaskView extends ShowAllTaskView{
+       private static final Logger LOGGER = Logger.getLogger(DeleteTaskView.class);
+
+       /**
+       * For print info for delete task
+       * */
        @Override
        public int printInfo(AbstractTaskList list) {
               super.printInfo(list);
@@ -20,17 +25,17 @@ public class DeleteTaskView extends ShowAllTaskView{
 
               Task oldTask = null;
               try {
-                     Logger.getLogger(DeleteTaskView.class).debug("Start getting sorted tasks for delete");
+                     LOGGER.debug("Start getting sorted tasks for delete");
                      oldTask = Tasks.getSortedTasksFromList(list)[num - 1];
-                     Logger.getLogger(DeleteTaskView.class).debug("start removing task");
+                     LOGGER.debug("start removing task");
                      list.remove(oldTask);
                      System.out.println("\nTask '" + oldTask.getTitle() + "' was deleted from list!");
 
               } catch (IllegalArgumentException e) {
-                     Logger.getLogger(DeleteTaskView.class).error("Don't get sorted list of task for delete :", e);
+                     LOGGER.error("Don't get sorted list of task for delete :", e);
 
               } catch (ArrayIndexOutOfBoundsException e) {
-                     Logger.getLogger(this.getClass().getName()).error("number task is out of bounds! Task wasn't deleted!", e);
+                     LOGGER.error("number task is out of bounds! Task wasn't deleted!", e);
               }
 
               return Controller.Actions.MENU.getInt();

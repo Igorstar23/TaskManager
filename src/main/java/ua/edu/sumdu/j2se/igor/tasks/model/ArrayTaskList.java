@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList {
        private Task[] list;
+       private Notificator ntf;
        private static final int DEF_SIZE = 5;
        private static final int DEF_RATIO = 2;
 
@@ -40,6 +41,8 @@ public class ArrayTaskList extends AbstractTaskList {
        public void add(Task task) {
 
               if (task == null) throw new IllegalArgumentException("param task is null!");
+
+              if (this.ntf != null) this.ntf.assignThreadToTask(task);
 
               if (this.size() == 0) {
                   this.list[0] = task;
@@ -88,6 +91,9 @@ public class ArrayTaskList extends AbstractTaskList {
                    if (i + 1 < this.size()) this.list[i] = this.list[i + 1];
               }
               this.list[this.size() - 1] = null;
+
+              if (this.ntf != null) this.ntf.removeThreadForTask(task);
+
               return true;
        }
        /**
@@ -118,6 +124,8 @@ public class ArrayTaskList extends AbstractTaskList {
        public Task getFirstTask() { return this.getTask(0); }
        @Override
        public Task getLastTask() { return this.getTask(this.size() - 1); }
+       @Override
+       public void setNotificator(Notificator ntf) { this.ntf = ntf; }
 
        /**
         * Returns an iterator over elements of type {@code T}.
@@ -164,12 +172,10 @@ public class ArrayTaskList extends AbstractTaskList {
               for (var el : this) res += el.toString() + " ";
               return res;
        }
-
        @Override
        public Stream<Task> getStream() {
               return Arrays.stream(this.list).filter(Objects::nonNull);
        }
-
        @Override
        public ArrayTaskList clone() {
               return (ArrayTaskList) super.clone();

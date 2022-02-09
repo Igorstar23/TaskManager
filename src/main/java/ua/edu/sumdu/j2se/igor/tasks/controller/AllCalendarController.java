@@ -4,6 +4,7 @@ import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.view.View;
 
 public class AllCalendarController extends Controller {
+
       public AllCalendarController(View view) {
              super(view);
              this.typeAction = Actions.SHOW_ALL_CALENDAR;

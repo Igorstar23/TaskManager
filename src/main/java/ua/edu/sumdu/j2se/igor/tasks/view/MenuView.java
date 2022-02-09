@@ -3,9 +3,6 @@ package ua.edu.sumdu.j2se.igor.tasks.view;
 import ua.edu.sumdu.j2se.igor.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 
-import java.lang.reflect.AccessibleObject;
-import java.util.HashSet;
-
 public class MenuView implements View{
        private String[] actionMenu = new String[] {
                "for add new task to your task list",
@@ -25,6 +22,9 @@ public class MenuView implements View{
                (Controller.Actions.SHOW_CALENDAR.getInt() - 1)
        };
 
+       /**
+       * For print global menu actions
+       * */
        @Override
        public int printInfo(AbstractTaskList list) {
               System.out.println("\nEnter variant action : \n");

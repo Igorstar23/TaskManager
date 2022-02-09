@@ -16,6 +16,8 @@ public class AddTaskController extends Controller {
 
        @Override
        public boolean isThatAction(Actions e) {
+
+              if (e == null) return false;
               return (this.typeAction.getInt() == e.getInt());
        }
 

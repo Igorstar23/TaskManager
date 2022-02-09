@@ -1,5 +1,8 @@
 package ua.edu.sumdu.j2se.igor.tasks.model;
 
+import org.apache.log4j.Logger;
+import ua.edu.sumdu.j2se.igor.tasks.view.DeleteTaskView;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -8,21 +11,15 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Serializable {
+       private static final Logger LOGGER = Logger.getLogger(AbstractTaskList.class);
        abstract public Task getTask(int index);
        abstract public boolean remove(Task task);
        abstract public int size();
        abstract public Task getFirstTask();
        abstract public Task getLastTask();
-       /**
-         * @return Task with min date from list
-       * */
-       //abstract public Task getMinTask();
-       /**
-         * @return Task with max date from list
-       * */
-       //abstract public Task getMaxTask();
 
        abstract public void add(Task task);
+       abstract public void setNotificator(Notificator ntf);
        public void addAll(Task[] tasks) { Arrays.stream(tasks).forEach(this::add); }
        public void addAllFromList(AbstractTaskList tasks) { tasks.getStream().forEach(this::add); }
 
@@ -138,6 +135,7 @@ public abstract class AbstractTaskList implements Iterable<Task>, Cloneable, Ser
                  try {
                       temp = TaskListFactory.createTaskList(ListTypes.getTypeList(this));
                  } catch (Exception e) {
+                      LOGGER.error(e);
                       e.printStackTrace();
                  }
                  for (int i = 0; i < this.size(); i++) temp.add(this.getTask(i).clone());

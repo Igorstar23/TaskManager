@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 public class AllCalendarView extends CalendarView {
 
+       /**
+       * For print calendar for all tasks from list
+       * */
        @Override
        public int printInfo(AbstractTaskList list) {
               LocalDateTime start = (list.getMinTask().isRepeated())? list.getMinTask().getStartTime().minusDays(1)

@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class LinkedTaskList extends AbstractTaskList{
        private Node first;
        private Node last;
+       private Notificator ntf;
 
        private class Node {
                private Task item;
@@ -70,6 +71,8 @@ public class LinkedTaskList extends AbstractTaskList{
 
             if (task == null) throw new IllegalArgumentException("param task is null!");
 
+            if (this.ntf != null) this.ntf.assignThreadToTask(task);
+
             if (this.isEmpty()) {
                 this.first = new Node(task);
                 this.last = first;
@@ -85,6 +88,8 @@ public class LinkedTaskList extends AbstractTaskList{
             this.last.setNextNode(new Node(task, this.last));
             this.last = this.last.getNextNode();
        }
+       @Override
+       public void setNotificator(Notificator ntf) { this.ntf = ntf; }
        /**
        * @param index must be >= 0 and < size of list
        * @return Task with need index from this list
@@ -128,6 +133,8 @@ public class LinkedTaskList extends AbstractTaskList{
                   if (!this.first.item.equals(task)) return false;
                   this.first = null;
                   this.last = null;
+
+                  if (this.ntf != null) this.ntf.removeThreadForTask(task);
                   return true;
               }
 
@@ -135,6 +142,8 @@ public class LinkedTaskList extends AbstractTaskList{
                   this.first = this.first.getNextNode();
 
                   if (this.first != null) this.first.setPrevNode(null);
+
+                  if (this.ntf != null) this.ntf.removeThreadForTask(task);
                   return true;
               }
 
@@ -142,6 +151,8 @@ public class LinkedTaskList extends AbstractTaskList{
                   this.last = this.last.getPrevNode();
 
                   if (this.last != null) this.last.setNextNode(null);
+
+                  if (this.ntf != null) this.ntf.removeThreadForTask(task);
                   return true;
               }
 
@@ -165,6 +176,8 @@ public class LinkedTaskList extends AbstractTaskList{
               // nextOld.setPrevNode(prevOld);
               oldNode.getNextNode().setPrevNode(oldNode.getPrevNode());
               oldNode = null;
+
+              if (this.ntf != null) this.ntf.removeThreadForTask(task);
               return true;
        }
        /**
@@ -184,8 +197,6 @@ public class LinkedTaskList extends AbstractTaskList{
               return count;
        }
        public boolean isEmpty() { return (this.first == null && this.last == null); }
-
-
 
        /**
          * Returns an iterator over elements of type {@code T}.
@@ -240,6 +251,6 @@ public class LinkedTaskList extends AbstractTaskList{
        }
        @Override
        public LinkedTaskList clone() {
-              return (LinkedTaskList) super.clone();
+              return (LinkedTaskList)super.clone();
        }
 }

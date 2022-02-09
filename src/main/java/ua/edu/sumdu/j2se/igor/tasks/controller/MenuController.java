@@ -1,6 +1,5 @@
 package ua.edu.sumdu.j2se.igor.tasks.controller;
 
-//import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.igor.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.igor.tasks.view.*;
 
@@ -34,6 +33,9 @@ public class MenuController extends Controller{
 
        public AbstractTaskList getTaskList() { return this.tasks; }
 
+       /**
+       * For run process method for all controllers from list of controllers
+       * */
        @Override
        public int process(AbstractTaskList tasks) {
               int act = this.view.printInfo(tasks);
@@ -45,7 +47,6 @@ public class MenuController extends Controller{
                    }
 
                    if (act == Actions.END_ACT.getInt()) {
-                       //Logger.getLogger(MenuController.class).debug("Exit from system...");
                        return Actions.END_ACT.getInt();
                    }
               }
